@@ -8,11 +8,13 @@ import com.ocpsoft.pretty.faces.annotation.URLMappings;
 import com.services.FaceletsMsgService;
 import java.io.Serializable;
 import java.util.List;
+import javax.faces.bean.ManagedBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
-@Component
+@Controller
+@ManagedBean
 @Scope("view")
 @URLMappings(mappings = {
   @URLMapping(id = "scriptsView", pattern = "/scripts", viewId = "/pages/public/scripts.jsf"),

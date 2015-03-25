@@ -1,11 +1,11 @@
 package com.configurations;
 
-//If you want to use @ViewScoped in Spring, then you will need to implement a custom scope.
 import java.util.Map;
 import javax.faces.context.FacesContext;
 import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.beans.factory.config.Scope;
 
+//If you want to use @ViewScoped in Spring, then you will need to implement a custom scope.
 public class ViewScope implements Scope {
 
   @Override
