@@ -1,5 +1,6 @@
-package com.controllers;
+package com.controllers.rest;
 
+import com.controllers.AuthController;
 import com.daos.ScriptRepository;
 import com.models.Publisher;
 import com.models.Script;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.core.io.Resource;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,8 +20,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@Transactional
-@RequestMapping(value = "/scripts")
+@Transactional(propagation = Propagation.REQUIRED)
+@RequestMapping("/rest/scripts")
 @CacheConfig(cacheNames = "scripts")
 public class ScriptController {
 
@@ -50,7 +52,7 @@ public class ScriptController {
     Publisher owner = authentication.getAuthenticatedUser();
 
     if (script.getName() == null || script.getContent() == null) {
-      throw new IllegalArgumentException("One or more fields are empty. {name | content | processor}");
+      throw new IllegalArgumentException("One or more required fields are empty. {name | content }");
     }
 
     script.setPublisher(owner);

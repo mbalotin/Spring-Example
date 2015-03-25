@@ -1,4 +1,4 @@
-package com.controllers;
+package com.controllers.rest;
 
 import com.daos.PublisherRepository;
 import com.models.Publisher;
@@ -11,6 +11,7 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.io.Resource;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,8 +19,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@Transactional
-@RequestMapping(value = "/publishers")
+@Transactional(propagation = Propagation.REQUIRED)
+@RequestMapping("/rest/publishers")
 @CacheConfig(cacheNames = "publishers")
 public class PublisherController {
 

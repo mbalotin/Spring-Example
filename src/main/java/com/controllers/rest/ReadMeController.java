@@ -1,5 +1,6 @@
-package com.controllers;
+package com.controllers.rest;
 
+import com.controllers.ConfigurableExample;
 import java.io.IOException;
 import javax.annotation.PostConstruct;
 import org.apache.commons.io.IOUtils;
@@ -13,8 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/rest")
 @DependsOn("org.springframework.context.config.internalBeanConfigurerAspect")
-public class SystemController {
+public class ReadMeController {
 
   @Value("classpath:/markdown/README.md")
   private Resource readMeMark;
@@ -46,7 +48,7 @@ public class SystemController {
     }
   }
 
-  @RequestMapping(value = "/", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
+  @RequestMapping(value = "/readme", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
   public String getReadMe() {
     return readMe;
   }

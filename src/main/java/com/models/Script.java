@@ -13,7 +13,7 @@ import lombok.Data;
 @Entity
 public class Script implements Serializable {
 
-  private static final long serialVersionUID = -354195658857743055L;
+  private static final long serialVersionUID = 1L;
 
   @Id
   @JsonIgnore
@@ -27,12 +27,7 @@ public class Script implements Serializable {
   private Publisher publisher;
 
   private String content;
-
-  public Script() {
-  }
-
-  public Script(String name) {
-    this.name = name;
-  }
+  private String description;
+  private String code;
 
 }

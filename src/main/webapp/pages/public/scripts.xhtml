@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:sec="http://www.springframework.org/security/tags"
+                template="/pages/template/template.xhtml">
+
+  <ui:define name="Content">
+
+    <ui:param name="bean" value="#{scriptMbean}" />
+
+    <p:fieldset legend="List of Scripts">
+      <h:form>
+
+        <p:dataList value="#{bean.scripts}" var="script" >
+          #{script.name} - ( #{script.description} ) : #{script.content}
+        </p:dataList>
+
+        <sec:authorize ifAnyGranted="ROLE_ADMIN">
+          <br />
+          <p:commandButton action="#{bean.load}" value="Edit"
+                           icon="ui-icon ui-icon-pencil" global="false"/>
+        </sec:authorize>
+
+      </h:form>
+    </p:fieldset>
+
+  </ui:define>
+</ui:composition>

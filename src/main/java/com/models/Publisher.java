@@ -18,7 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Entity
 public class Publisher implements Serializable {
 
-  private static final long serialVersionUID = -391525845010118211L;
+  private static final long serialVersionUID = 1L;
 
   @Id
   @JsonIgnore

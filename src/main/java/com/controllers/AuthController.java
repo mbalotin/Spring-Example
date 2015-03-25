@@ -1,5 +1,6 @@
 package com.controllers;
 
+import com.controllers.rest.PublisherController;
 import com.models.Publisher;
 import java.util.ArrayList;
 import java.util.List;

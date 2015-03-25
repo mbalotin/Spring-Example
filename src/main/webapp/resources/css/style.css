@@ -1,0 +1,24 @@
+/* 
+    Document   : style
+    Created on : Sep 10, 2012, 3:00:57 PM
+    Author     : nelson.rosenberg
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+#center{
+    padding: 10px 10px 10px 10px !important;
+}
+
+.ui-layout-container{
+    font-size: 67%; 
+    background: #7eacf6;
+}
+
+/*Set menu highlight*/
+.active{
+    border:1px solid #79b7e7 !important;
+    background:#d0e5f5 url("#{resource['primefaces-redmond:images/ui-bg_glass_75_d0e5f5_1x400.png']}") 50% 50% repeat-x !important;
+    font-weight:bold !important;
+    color:#1d5987 !important;
+}
