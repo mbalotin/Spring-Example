@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <!-- Your own application should inherit from spring-boot-starter-parent -->
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>1.2.2.RELEASE</version>
+  </parent>
+
+  <artifactId>spring_example</artifactId>
+  <groupId>com</groupId>
+  <name>Spring Example</name>
+  <description>Spring Example 1.0</description>
+  <version>1.0</version>
+  <packaging>jar</packaging>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <aspectj.version>1.8.2</aspectj.version>
+    <java.version>1.7</java.version>
+  </properties>
+
+  <dependencies>
+
+    <!-- Spring Data dependencies -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-logging</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-jpa</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.data</groupId>
+      <artifactId>spring-data-commons-core</artifactId>
+      <version>1.4.1.RELEASE</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context-support</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-log4j</artifactId>
+    </dependency>
+
+    <!-- Spring Security dependencies -->
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-web</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-config</artifactId>
+    </dependency>
+
+    <!-- Spring AOP + AspectJ -->
+    <dependency>
+      <groupId>org.aspectj</groupId>
+      <artifactId>aspectjrt</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-aspects</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-aspects</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>javax.persistence</groupId>
+      <artifactId>persistence-api</artifactId>
+      <version>1.0</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>net.sf.ehcache</groupId>
+      <artifactId>ehcache-jcache</artifactId>
+      <version>1.5.0-0.5</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-instrument</artifactId>
+    </dependency>
+
+    <!-- Java Mail API -->
+    <dependency>
+      <groupId>javax.mail</groupId>
+      <artifactId>mail</artifactId>
+      <version>1.5.0-b01</version>
+    </dependency>
+
+    <!-- Commons dependencies  -->
+    <dependency>
+      <groupId>commons-validator</groupId>
+      <artifactId>commons-validator</artifactId>
+      <version>1.4.1</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>2.4</version>
+    </dependency>
+
+    <!-- Ehcache dependencies -->
+    <dependency>
+      <groupId>net.sf.ehcache</groupId>
+      <artifactId>ehcache</artifactId>
+      <version>2.9.1</version>
+    </dependency>
+
+    <!-- Markdown to Html dependencies -->
+    <dependency>
+      <groupId>org.commonjava.googlecode.markdown4j</groupId>
+      <artifactId>markdown4j</artifactId>
+      <version>2.2-cj-1.0</version>
+    </dependency>
+
+    <!-- Lombok dependencies -->
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.16.2</version>
+    </dependency>
+
+    <!-- Mysql dependencies -->
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+    </dependency>
+
+  </dependencies>
+
+  <build>
+    <!-- add generated resources and profile resources to resources plugin -->
+    <resources>
+      <resource>
+        <directory>${profiledir}/resources</directory>
+        <filtering>false</filtering>
+      </resource>
+      <resource>
+        <directory>${pom.basedir}/src/main/resources</directory>
+        <filtering>false</filtering>
+      </resource>
+    </resources>
+
+    <plugins>
+      <!-- Spring boot with Maven -->
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+
+      <!-- Set jdk version -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.1</version>
+        <configuration>
+          <source>1.7</source>
+          <target>1.7</target>
+        </configuration>
+      </plugin>
+
+      <!-- Compile time weaver for Configurable classes  =====> MAY NOT WORK WELL WITH LOMBOK! -->
+      <!-- https://palesz.wordpress.com/2011/12/03/howto-maven-lombok-and-aspectj-together/ -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>aspectj-maven-plugin</artifactId>
+        <version>1.7</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+            <configuration>
+              <showWeaveInfo>true</showWeaveInfo>
+              <forceAjcCompile>true</forceAjcCompile>
+              <sources/>
+              <weaveDirectories>
+                <weaveDirectory>${project.build.directory}/classes</weaveDirectory>
+              </weaveDirectories>
+              <aspectLibraries>
+                <aspectLibrary>
+                  <groupId>org.springframework</groupId>
+                  <artifactId>spring-aspects</artifactId>
+                </aspectLibrary>
+              </aspectLibraries>
+              <source>${java.version}</source>
+              <target>${java.version}</target>
+              <complianceLevel>${java.version}</complianceLevel>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- Copy keystore to target -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>1.7</version>
+        <executions>
+          <execution>
+            <phase>compile</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <target>
+                <copy file="README.md" tofile="${project.build.directory}/classes/markdown/README.md"/>
+                <copy file="keystore.jks" tofile="${project.build.directory}/keystore.jks"/>
+              </target>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+    </plugins>
+  </build>
+
+  <repositories>
+    <!-- Add Local repositories -->
+    <!--    <repository>
+      <id>project.local</id>
+      <name>project</name>
+      <url>file://${project.basedir}/repo</url>
+    </repository>-->
+
+  </repositories>
+
+</project>
