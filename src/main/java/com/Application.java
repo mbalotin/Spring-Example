@@ -10,7 +10,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
 // Spring boot example: https://spring.io/guides/gs/spring-boot/
-// http://www.thymeleaf.org/doc/articles/layouts.html
 @EnableCaching
 @EnableScheduling
 @EnableWebSecurity

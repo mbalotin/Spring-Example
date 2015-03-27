@@ -21,7 +21,6 @@
     <maven.compiler.target>1.7</maven.compiler.target>
     <maven.compiler.source>1.7</maven.compiler.source>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <aspectj.version>1.8.2</aspectj.version>
     <java.version>1.7</java.version>
   </properties>
 
@@ -31,12 +30,6 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>org.springframework.boot</groupId>
-          <artifactId>spring-boot-starter-logging</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -55,11 +48,6 @@
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-log4j</artifactId>
-    </dependency>
-
 
     <!-- Spring Metrics dependencies -->
     <!-- http://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/#production-ready-->
@@ -82,7 +70,6 @@
     <dependency>
       <groupId>org.aspectj</groupId>
       <artifactId>aspectjrt</artifactId>
-      <version>${aspectj.version}</version>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
@@ -168,6 +155,12 @@
       <artifactId>thymeleaf-layout-dialect</artifactId>
     </dependency>
 
+    <dependency>
+      <groupId>ro.isdc.wro4j</groupId>
+      <artifactId>wro4j-core</artifactId>
+      <version>1.7.7</version>
+    </dependency>
+
     <!-- WebJars dependencies -->
     <dependency>
       <groupId>org.webjars</groupId>
@@ -183,6 +176,7 @@
   </dependencies>
 
   <build>
+
     <!-- Add Resources -->
     <resources>
       <resource>
@@ -190,22 +184,13 @@
         <filtering>false</filtering>
       </resource>
 
-      <!-- Comment this three resources when using WAR as it's not needed. (probably)-->
+      <!-- Comment this resource when using WAR as it's not needed. (probably)-->
       <resource>
-        <directory>src/main/webapp/webpages</directory>
-        <targetPath>public</targetPath>
+        <directory>src/main/webapp</directory>
+        <targetPath>webapp</targetPath>
         <filtering>false</filtering>
       </resource>
-      <resource>
-        <directory>src/main/webapp/templates</directory>
-        <targetPath>public</targetPath>
-        <filtering>false</filtering>
-      </resource>
-      <resource>
-        <directory>src/main/webapp/resources</directory>
-        <targetPath>resources</targetPath>
-        <filtering>false</filtering>
-      </resource>
+
     </resources>
 
     <plugins>
@@ -229,7 +214,7 @@
         </configuration>
       </plugin>
 
-      <!-- Compile time weaver for Configurable classes  =====> MAY NOT WORK WELL WITH LOMBOK! -->
+      <!-- Compile time weaver for Configurable classes -->
       <!-- https://palesz.wordpress.com/2011/12/03/howto-maven-lombok-and-aspectj-together/ -->
       <plugin>
         <groupId>org.codehaus.mojo</groupId>

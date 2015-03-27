@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html layout:decorator="default">
+<html layout:decorator="/templates/default">
 
   <body>
     <div layout:fragment="content">
@@ -29,7 +29,7 @@
             <tbody>
               <tr>
                 <td>
-                  <p><a href="#" th:href="@{autoconfig}">autoconfig</a></p>
+                  <p><a href="#" th:href="@{system/autoconfig}">autoconfig</a></p>
                 </td>
                 <td>
                   <p>Displays an auto-configuration report showing all auto-configuration candidates and the

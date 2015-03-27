@@ -39,7 +39,7 @@ public class ScriptController {
 
   @RequestMapping()
   public ModelAndView getScriptList() throws IOException {
-    ModelAndView model = new ModelAndView("scripts");
+    ModelAndView model = new ModelAndView("webpages/scripts");
     model.addObject("scripts", getAllScripts());
     return model;
   }
