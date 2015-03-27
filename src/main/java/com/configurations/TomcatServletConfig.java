@@ -1,10 +1,11 @@
 package com.configurations;
 
 import com.annotations.Production;
+import java.util.concurrent.TimeUnit;
 import org.apache.catalina.Context;
 import org.apache.catalina.connector.Connector;
-import org.apache.tomcat.util.descriptor.web.SecurityCollection;
-import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
+import org.apache.catalina.deploy.SecurityCollection;
+import org.apache.catalina.deploy.SecurityConstraint;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
 import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 import org.springframework.context.annotation.Bean;
@@ -39,6 +40,14 @@ public class TomcatServletConfig {
     connector.setPort(80);
     connector.setRedirectPort(443);
     return connector;
+  }
+
+  @Bean
+  public EmbeddedServletContainerFactory servletContainer() {
+    TomcatEmbeddedServletContainerFactory factory = new TomcatEmbeddedServletContainerFactory();
+    factory.setSessionTimeout(10, TimeUnit.MINUTES);
+    //factory.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/notfound.html"));
+    return factory;
   }
 
 }

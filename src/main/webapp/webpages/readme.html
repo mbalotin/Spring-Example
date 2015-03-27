@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
   <head>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css" ></link>
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
     <style>
       .markdown-body {
@@ -680,4 +681,11 @@
     </style>
     <script>hljs.initHighlightingOnLoad();</script>
   </head>
-  <article class="markdown-body">
+
+  <body>
+    <article class="markdown-body">
+      <div th:utext="${markdown}"></div>
+    </article>
+  </body>
+
+</html>

@@ -18,10 +18,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 @Transactional(propagation = Propagation.REQUIRED)
-@RequestMapping("/rest/scripts")
+@RequestMapping("/scripts")
 @CacheConfig(cacheNames = "scripts")
 public class ScriptController {
 
@@ -36,12 +37,19 @@ public class ScriptController {
   @Autowired
   private ScriptRepository scriptRepository;
 
-  @RequestMapping(method = RequestMethod.GET)
+  @RequestMapping()
+  public ModelAndView getScriptList() throws IOException {
+    ModelAndView model = new ModelAndView("scripts");
+    model.addObject("scripts", getAllScripts());
+    return model;
+  }
+
+  @RequestMapping(value = "/example")
   public String getScriptExample() throws IOException {
     return IOUtils.toString(scriptExample.getInputStream());
   }
 
-  @RequestMapping(value = "/list", method = RequestMethod.GET)
+  @RequestMapping(value = "/list")
   public List<Script> getAllScripts() {
     Publisher user = authentication.getAuthenticatedUser();
     return scriptRepository.findAllByPublisher(user);
