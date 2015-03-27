@@ -40,8 +40,8 @@ public class ReadMeController {
 
   @RequestMapping(value = "/readme", produces = MediaType.TEXT_HTML_VALUE)
   public String getReadMe(Model model) {
-    model.addAttribute("markdown", readMe);
-    return "readme";
+    model.addAttribute("readme", readMe);
+    return "faq";
   }
 
 }
