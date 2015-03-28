@@ -90,12 +90,12 @@
       <scope>provided</scope>
     </dependency>
 
-    <!--     Provided (uncomment for embedded war support)
+    <!-- Provided (uncomment for embedded war support) -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-tomcat</artifactId>
       <scope>provided</scope>
-    </dependency>-->
+    </dependency>
 
     <!-- Java Mail API -->
     <dependency>
@@ -178,7 +178,7 @@
         <filtering>false</filtering>
       </resource>
       <resource>
-        <directory>${basedir}/src/main/webapp/</directory>
+        <directory>${basedir}/src/main/webapp</directory>
         <targetPath>webapp</targetPath>
         <filtering>false</filtering>
         <excludes>
@@ -188,7 +188,7 @@
       </resource>
       <resource>
         <directory>${basedir}/src/main/webapp/resources</directory>
-        <targetPath>public</targetPath>
+        <targetPath>public/resources</targetPath>
         <filtering>false</filtering>
         <excludes>
           <!-- These file are excluded because they are compiled and minified by other plugins -->
@@ -229,7 +229,7 @@
           <coffeeJoinSets>
             <joinSet>
               <id>main</id>
-              <coffeeOutputDirectory>${project.build.outputDirectory}/public/js</coffeeOutputDirectory>
+              <coffeeOutputDirectory>${project.build.outputDirectory}/public/resources/js</coffeeOutputDirectory>
               <fileSet>
                 <directory>${basedir}/src/main/webapp/resources/js</directory>
                 <includes>
@@ -238,9 +238,9 @@
               </fileSet>
             </joinSet>
           </coffeeJoinSets>
-          <minifiedFile>${project.build.outputDirectory}/public/js/main.min.js</minifiedFile>
+          <minifiedFile>${project.build.outputDirectory}/public/resources/js/main.min.js</minifiedFile>
           <setOfFilesToMinify>
-            <directory>${project.build.outputDirectory}/public/js</directory>
+            <directory>${project.build.outputDirectory}/public/resources/js</directory>
             <includes>
               <include>**/*.js</include>
             </includes>
@@ -270,7 +270,7 @@
             </goals>
             <configuration>
               <sassSourceDirectory>${basedir}/src/main/webapp/resources/css</sassSourceDirectory>
-              <destination>${project.build.outputDirectory}/public/css</destination>
+              <destination>${project.build.outputDirectory}/public/resources/css</destination>
             </configuration>
           </execution>
         </executions>
@@ -287,9 +287,9 @@
               <goal>minify</goal>
             </goals>
             <configuration>
-              <webappSourceDir>${project.build.outputDirectory}/public</webappSourceDir>
+              <webappSourceDir>${project.build.outputDirectory}/public/resources</webappSourceDir>
               <cssSourceDir>css</cssSourceDir>
-              <webappTargetDir>${project.build.outputDirectory}/public</webappTargetDir>
+              <webappTargetDir>${project.build.outputDirectory}/public/resources</webappTargetDir>
               <cssTargetDir>css</cssTargetDir>
               <cssFinalFile>main.min.css</cssFinalFile>
               <nosuffix>true</nosuffix>

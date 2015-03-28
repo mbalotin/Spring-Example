@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Transactional(propagation = Propagation.REQUIRED)
-@RequestMapping("/publishers")
+@RequestMapping("publishers")
 @CacheConfig(cacheNames = "publishers")
 public class PublisherController {
 
@@ -31,19 +31,18 @@ public class PublisherController {
   private Resource publisherExample;
 
   @Secured("ROLE_ADMIN")
-  @RequestMapping("/")
   public String getPublisherExample() throws IOException {
     return IOUtils.toString(publisherExample.getInputStream());
   }
 
   @Secured("ROLE_ADMIN")
-  @RequestMapping(value = "/list")
+  @RequestMapping(value = "list")
   public List<Publisher> getAllPublishersData() {
     return publisherRepository.findAll();
   }
 
   @Secured("ROLE_ADMIN")
-  @RequestMapping(value = "/new", method = RequestMethod.POST)
+  @RequestMapping(value = "new", method = RequestMethod.POST)
   public Publisher postNewPublisher(@RequestBody Publisher publisher) {
 
     if (publisher.getUsername() == null || publisher.getEmail() == null || publisher.getPassword() == null) {

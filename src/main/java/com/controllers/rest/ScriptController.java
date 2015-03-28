@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Transactional(propagation = Propagation.REQUIRED)
-@RequestMapping("/scripts")
+@RequestMapping("scripts")
 @CacheConfig(cacheNames = "scripts")
 public class ScriptController {
 
@@ -35,12 +35,12 @@ public class ScriptController {
   @Autowired
   private ScriptRepository scriptRepository;
 
-  @RequestMapping(value = "/example")
+  @RequestMapping(value = "example")
   public String getScriptExample() throws IOException {
     return IOUtils.toString(scriptExample.getInputStream());
   }
 
-  @RequestMapping(value = "/new", method = RequestMethod.POST)
+  @RequestMapping(value = "new", method = RequestMethod.POST)
   public Script postNewScript(@RequestBody Script script) {
     Publisher owner = authentication.getAuthenticatedUser();
 

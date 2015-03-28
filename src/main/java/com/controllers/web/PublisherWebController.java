@@ -30,8 +30,9 @@ public class PublisherWebController {
    *
    * @throws javax.mail.MessagingException
    */
-  @RequestMapping(value = "/sendSubscriptionToPublisher", method = RequestMethod.GET)
+  @RequestMapping(value = "sendSubscriptionToPublisher", method = RequestMethod.GET)
   public void sendSubscriptionToPublisher() throws MessagingException {
+
     Publisher user = authentication.getAuthenticatedUser();
 
     // Prepare the evaluation context
@@ -39,7 +40,7 @@ public class PublisherWebController {
     ctx.setVariable("name", user.getUsername());
     ctx.setVariable("subscriptionDate", new Date());
 
-    String htmlContent = templateEngine.process("mails/email", ctx);
+    String htmlContent = templateEngine.process("sub_mail", ctx);
 
     String subject = "Email test";
 

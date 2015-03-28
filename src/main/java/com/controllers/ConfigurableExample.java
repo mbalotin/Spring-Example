@@ -17,7 +17,8 @@ public class ConfigurableExample {
   public PublisherRepository publisherRepository;
 
   /**
-   * THIS DOES NOT WORK!!! The Java EE bean annotations @PostConstruct can only be applied to container-managed beans (ex: beans annotated with spring)
+   * THIS DOES NOT WORK!!!
+   * The Java EE bean annotations @PostConstruct can only be applied to container-managed beans (ex: beans annotated with spring)
    */
   @PostConstruct
   public void initialize() {
