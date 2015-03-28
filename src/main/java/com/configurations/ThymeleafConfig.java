@@ -10,13 +10,24 @@ import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 @Configuration
 public class ThymeleafConfig {
 
+//  @Bean
+//  public ClassLoaderTemplateResolver emailTemplateResolver() {
+//    ClassLoaderTemplateResolver emailTemplateResolver = new ClassLoaderTemplateResolver();
+//    emailTemplateResolver.setPrefix("mails/");
+//    emailTemplateResolver.setSuffix(".html");
+//    emailTemplateResolver.setTemplateMode("HTML5");
+//    emailTemplateResolver.setCharacterEncoding("UTF-8");
+//
+//    return emailTemplateResolver;
+//  }
   @Bean
   public ServletContextTemplateResolver webpagesResolver() {
-    ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver();
-    templateResolver.setTemplateMode("HTML5");
-    templateResolver.setPrefix("/webpages/");
-    templateResolver.setSuffix(".html");
-    return templateResolver;
+    ServletContextTemplateResolver webpagesResolver = new ServletContextTemplateResolver();
+    webpagesResolver.setTemplateMode("HTML5");
+    webpagesResolver.setPrefix("/webpages/");
+    webpagesResolver.setSuffix(".html");
+
+    return webpagesResolver;
   }
 
   @Bean
@@ -25,6 +36,8 @@ public class ThymeleafConfig {
     templateResolver.setTemplateMode("HTML5");
     templateResolver.setPrefix("/templates/");
     templateResolver.setSuffix(".html");
+
     return templateResolver;
   }
+
 }

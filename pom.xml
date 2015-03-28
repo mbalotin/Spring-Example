@@ -276,14 +276,13 @@
         </executions>
       </plugin>
 
-      <!-- Monyfier for CSS -->
+      <!-- Minifier for CSS -->
       <plugin>
         <groupId>com.samaxes.maven</groupId>
         <artifactId>minify-maven-plugin</artifactId>
         <version>1.7.4</version>
         <executions>
           <execution>
-            <phase>package</phase>
             <goals>
               <goal>minify</goal>
             </goals>
@@ -334,7 +333,7 @@
         </executions>
       </plugin>
 
-      <!-- Copy keystore to target -->
+      <!-- Copy keystore.jks and README.md to target -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-antrun-plugin</artifactId>
@@ -364,7 +363,7 @@
     <!--    <repository>
       <id>project.local</id>
       <name>project</name>
-      <url>file://${project.basedir}/repo</url>
+      <url>file://${basedir}/repo</url>
     </repository>-->
 
   </repositories>
