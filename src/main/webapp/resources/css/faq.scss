@@ -21,8 +21,10 @@
   word-wrap: break-word;
 }
 
-.markdown-body a {
-  background: transparent;
+.markdown-body {
+  a {
+    background: transparent;
+  }
 }
 
 .markdown-body a:active,

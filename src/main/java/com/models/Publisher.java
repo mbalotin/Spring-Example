@@ -29,7 +29,9 @@ public class Publisher implements Serializable {
 
   private String username;
 
-  //Removing lombok here so we can set JsonIgnore only in gettter
+  /**
+   * Removing lombok here so we can set JsonIgnore only in getter.
+   */
   @Getter(AccessLevel.NONE)
   @Setter(AccessLevel.NONE)
   private String password;

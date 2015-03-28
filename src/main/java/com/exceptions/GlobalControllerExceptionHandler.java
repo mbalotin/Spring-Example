@@ -7,8 +7,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-//This is a user friendly way of returning errors in rest requests.
-//You can add new errors of rest methods here.
+/**
+ * This is a user friendly way of returning errors in rest requests. You can add new errors of rest methods here.
+ */
 @ControllerAdvice
 class GlobalControllerExceptionHandler {
 

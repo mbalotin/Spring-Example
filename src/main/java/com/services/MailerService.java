@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 
-//http://docs.spring.io/spring/docs/current/spring-framework-reference/html/mail.html
+/**
+ * http://docs.spring.io/spring/docs/current/spring-framework-reference/html/mail.html
+ */
 //@Service
 public class MailerService {
 

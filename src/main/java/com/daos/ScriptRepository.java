@@ -6,7 +6,9 @@ import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-//EXAMPLES: http://docs.spring.io/spring-data/jpa/docs/current/reference/html/
+/**
+ * EXAMPLES: http://docs.spring.io/spring-data/jpa/docs/current/reference/html/
+ */
 @Repository
 public interface ScriptRepository extends CrudRepository<Script, Long> {
 

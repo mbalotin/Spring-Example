@@ -7,7 +7,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 
-//Keeping ehcache config as XML as it looks cleaner.
+/**
+ * Keeping ehcache config as XML as it looks cleaner.
+ */
 @Configuration
 public class CachingConfig {
 

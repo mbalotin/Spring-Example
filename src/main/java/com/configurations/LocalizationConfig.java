@@ -12,7 +12,9 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 @Configuration
 public class LocalizationConfig extends WebMvcConfigurerAdapter {
 
-  //Use this to set different properties for locale messages, allowing more customization;
+  /**
+   * Use this to set different properties for locale messages, allowing more customization;
+   */
   @Bean
   ReloadableResourceBundleMessageSource messageSource() {
     ReloadableResourceBundleMessageSource source = new ReloadableResourceBundleMessageSource();
@@ -22,7 +24,9 @@ public class LocalizationConfig extends WebMvcConfigurerAdapter {
     return source;
   }
 
-  //This intereceptor allows changes in the locale by passing ?language=XX to any request
+  /**
+   * This interceptor allows changes in the locale by passing ?language=XX to any request
+   */
   @Override
   public void addInterceptors(InterceptorRegistry registry) {
     registry.addInterceptor(localeChangeInterceptor());

@@ -28,7 +28,9 @@ public class ReadMeController {
     readMe = new Markdown4jProcessor().process(readMeString);
   }
 
-  //MORE INFO: http://stackoverflow.com/questions/27230446/configurable-doesnt-work-for-objects-initialized-in-postconstruct-methods
+  /**
+   * MORE INFO: http://stackoverflow.com/questions/27230446/configurable-doesnt-work-for-objects-initialized-in-postconstruct-methods
+   */
   @PostConstruct
   public void ConfigurableInjectionInPostConstructTest() {
     //Testing config

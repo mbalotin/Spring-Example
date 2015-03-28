@@ -90,8 +90,8 @@
       <scope>provided</scope>
     </dependency>
 
-    <!-- Provided (for embedded war support, uncomment if using WAR) -->
-    <!--    <dependency>
+    <!--     Provided (uncomment for embedded war support)
+    <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-tomcat</artifactId>
       <scope>provided</scope>
@@ -174,18 +174,26 @@
     <!-- Add Resources -->
     <resources>
       <resource>
-        <directory>src/main/resources</directory>
+        <directory>${basedir}/src/main/resources</directory>
         <filtering>false</filtering>
       </resource>
-
-      <!-- Comment this resource when using WAR as it's not needed. (probably)-->
       <resource>
-        <directory>src/main/webapp</directory>
+        <directory>${basedir}/src/main/webapp/</directory>
         <targetPath>webapp</targetPath>
         <filtering>false</filtering>
         <excludes>
+          <!-- These file are excluded because they need to be in classpath:/public folder -->
+          <exclude>resources/</exclude>
+        </excludes>
+      </resource>
+      <resource>
+        <directory>${basedir}/src/main/webapp/resources</directory>
+        <targetPath>public</targetPath>
+        <filtering>false</filtering>
+        <excludes>
+          <!-- These file are excluded because they are compiled and minified by other plugins -->
           <exclude>**/*.coffee</exclude>
-          <exclude>**/*.sass</exclude>
+          <exclude>**/*.scss</exclude>
         </excludes>
       </resource>
 
@@ -212,6 +220,88 @@
         </configuration>
       </plugin>
 
+      <!-- Compiler and Minifier for Coffeescript-->
+      <plugin>
+        <groupId>com.theoryinpractise</groupId>
+        <artifactId>coffee-maven-plugin</artifactId>
+        <version>1.4.13</version>
+        <configuration>
+          <coffeeJoinSets>
+            <joinSet>
+              <id>main</id>
+              <coffeeOutputDirectory>${project.build.outputDirectory}/public/js</coffeeOutputDirectory>
+              <fileSet>
+                <directory>${basedir}/src/main/webapp/resources/js</directory>
+                <includes>
+                  <include>**/*.coffee</include>
+                </includes>
+              </fileSet>
+            </joinSet>
+          </coffeeJoinSets>
+          <minifiedFile>${project.build.outputDirectory}/public/js/main.min.js</minifiedFile>
+          <setOfFilesToMinify>
+            <directory>${project.build.outputDirectory}/public/js</directory>
+            <includes>
+              <include>**/*.js</include>
+            </includes>
+          </setOfFilesToMinify>
+        </configuration>
+        <executions>
+          <execution>
+            <id>coffee</id>
+            <goals>
+              <goal>coffee</goal>
+              <goal>minify</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- Compiler for SCSS  -->
+      <plugin>
+        <groupId>org.jasig.maven</groupId>
+        <artifactId>sass-maven-plugin</artifactId>
+        <version>1.1.1</version>
+        <executions>
+          <execution>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>update-stylesheets</goal>
+            </goals>
+            <configuration>
+              <sassSourceDirectory>${basedir}/src/main/webapp/resources/css</sassSourceDirectory>
+              <destination>${project.build.outputDirectory}/public/css</destination>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- Monyfier for CSS -->
+      <plugin>
+        <groupId>com.samaxes.maven</groupId>
+        <artifactId>minify-maven-plugin</artifactId>
+        <version>1.7.4</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>minify</goal>
+            </goals>
+            <configuration>
+              <webappSourceDir>${project.build.outputDirectory}/public</webappSourceDir>
+              <cssSourceDir>css</cssSourceDir>
+              <webappTargetDir>${project.build.outputDirectory}/public</webappTargetDir>
+              <cssTargetDir>css</cssTargetDir>
+              <cssFinalFile>main.min.css</cssFinalFile>
+              <nosuffix>true</nosuffix>
+              <cssSourceIncludes>
+                <include>*.css</include>
+              </cssSourceIncludes>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
       <!-- Compile time weaver for Configurable classes -->
       <!-- https://palesz.wordpress.com/2011/12/03/howto-maven-lombok-and-aspectj-together/ -->
       <plugin>
@@ -228,7 +318,7 @@
               <forceAjcCompile>true</forceAjcCompile>
               <sources/>
               <weaveDirectories>
-                <weaveDirectory>${project.build.directory}/classes</weaveDirectory>
+                <weaveDirectory>${project.build.outputDirectory}</weaveDirectory>
               </weaveDirectories>
               <aspectLibraries>
                 <aspectLibrary>

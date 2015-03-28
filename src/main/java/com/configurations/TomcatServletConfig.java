@@ -15,8 +15,9 @@ import org.springframework.context.annotation.Configuration;
 @Production
 public class TomcatServletConfig {
 
-  //Forward Http to Https
-  //Other SecurityConstraints can be added to fine grain the http forward.
+  /**
+   * Forward Http to Https. Other SecurityConstraints can be added to fine grain the http forward.
+   */
   @Bean
   public EmbeddedServletContainerFactory tomcatEmbeddedServletContainerFactory() {
     TomcatEmbeddedServletContainerFactory factory = new TomcatEmbeddedServletContainerFactory() {
@@ -42,7 +43,9 @@ public class TomcatServletConfig {
     return connector;
   }
 
-  //Set timeout for tomcat and custom error pages.
+  /**
+   * Set timeout for tomcat and custom error pages.
+   */
   @Bean
   public EmbeddedServletContainerFactory servletContainer() {
     TomcatEmbeddedServletContainerFactory factory = new TomcatEmbeddedServletContainerFactory();
