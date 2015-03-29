@@ -209,7 +209,7 @@
       </plugin>
 
       <!-- Since we copy web files into classpath to make then available for spring and thymeleaf,
-      this exclusions avoid duplications of webapp content when packaging a war. -->
+      these exclusions avoid duplications of webapp content when packaging a war. -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
