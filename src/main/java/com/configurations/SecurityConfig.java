@@ -16,9 +16,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   @Autowired
   private AuthController userDetailsService;
 
+  /*
+   * Basic Authentication configuration for both WEB and REST.
+   */
   @Override
   protected void configure(HttpSecurity http) throws Exception {
-    // this replaces the web security http configuration
     http.csrf().disable().authorizeRequests()
             .antMatchers("/").permitAll()
             .antMatchers("/**").authenticated()
@@ -27,6 +29,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .httpBasic();
   }
 
+  /*
+   * TODO: Login authentication with Login/Logou pages
+   */
+//  @Override
+//  protected void configure(HttpSecurity http) throws Exception {
+//    http.csrf().disable().authorizeRequests()
+//            .antMatchers("/").permitAll()
+//            .antMatchers("/**").authenticated()
+//            .and()
+//            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED).and()
+//            .httpBasic();
+//  }
   @Override
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
     PasswordEncoder encoder = new BCryptPasswordEncoder();

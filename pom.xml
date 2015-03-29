@@ -346,6 +346,7 @@
               <target>
                 <copy file="README.md" tofile="${project.build.outputDirectory}/markdown/README.md"/>
                 <copy file="keystore.jks" tofile="${project.build.directory}/keystore.jks"/>
+                <copy file="application.properties" tofile="${project.build.directory}/application.properties"/>
               </target>
             </configuration>
           </execution>

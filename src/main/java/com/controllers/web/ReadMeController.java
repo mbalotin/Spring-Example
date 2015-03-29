@@ -6,7 +6,6 @@ import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.markdown4j.Markdown4jProcessor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.DependsOn;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -14,7 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@DependsOn("org.springframework.context.config.internalBeanConfigurerAspect")
 public class ReadMeController {
 
   private static final Logger logger = Logger.getLogger(ReadMeController.class);

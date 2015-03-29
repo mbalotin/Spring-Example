@@ -5,10 +5,9 @@ import org.springframework.context.annotation.Configuration;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 /**
- * This class facilitates writing of redirects, removing need for full paths everywhere.
- *
- * Because mails use ClassLoaderTemplateResolver, don't need any prefix in front of these templates.
- * See PublisherWebController for example.
+ * This class configures Thymeleaf to find the templates in the correct classpath folders.
+ * We don't need a configuration for the classpath:templates/ folder as this is the default one.
+ * We also don't need to configure /resources as they are placed in a spring public folder.
  */
 @Configuration
 public class ThymeleafConfig {

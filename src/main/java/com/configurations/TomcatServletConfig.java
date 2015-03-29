@@ -11,12 +11,19 @@ import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletCon
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/*
+ * If you want to use Embedded Jetty, delete this class.
+ * I have not found a way to do Http to Https forward in Jetty.
+ * Any help is appreciated.
+ */
 @Configuration
 @Production
 public class TomcatServletConfig {
 
   /**
    * Forward Http to Https. Other SecurityConstraints can be added to fine grain the http forward.
+   *
+   * @return EmbeddedServletContainerFactory
    */
   @Bean
   public EmbeddedServletContainerFactory tomcatEmbeddedServletContainerFactory() {
@@ -45,6 +52,8 @@ public class TomcatServletConfig {
 
   /**
    * Set timeout for tomcat and custom error pages.
+   *
+   * @return EmbeddedServletContainerFactory
    */
   @Bean
   public EmbeddedServletContainerFactory servletContainer() {

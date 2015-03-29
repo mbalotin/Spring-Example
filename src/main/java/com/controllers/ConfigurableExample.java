@@ -19,10 +19,13 @@ public class ConfigurableExample {
   /**
    * THIS DOES NOT WORK!!!
    * The Java EE bean annotations @PostConstruct can only be applied to container-managed beans (ex: beans annotated with spring)
+   * HOWEVER!!!
+   * IF the class that is instantiating this Configurable has @DependsOn("org.springframework.context.config.internalBeanConfigurerAspect")
+   * then this WILL WORK. See UseConfigurableExample.java.
    */
   @PostConstruct
   public void initialize() {
-
+    System.err.println("THIS IS CONFIGURABLE @POSTCONSTRUCT");
   }
 
 }
