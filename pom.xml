@@ -7,8 +7,9 @@
   <groupId>com</groupId>
   <artifactId>spring_example</artifactId>
   <name>Spring Example</name>
+  <description>Spring Example for every project!</description>
   <version>1.0</version>
-  <packaging>jar</packaging>
+  <packaging>war</packaging>
 
   <parent>
     <groupId>io.spring.platform</groupId>
@@ -18,18 +19,31 @@
   </parent>
 
   <properties>
-    <maven.compiler.target>1.7</maven.compiler.target>
-    <maven.compiler.source>1.7</maven.compiler.source>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <!-- This is used by spring boot to set java version and Main class.-->
     <java.version>1.7</java.version>
+    <start-class>com.Application</start-class>
   </properties>
 
   <dependencies>
+
+    <!-- To build a war file that is both executable and deployable into an external container
+    you need to mark the embedded container dependencies as “provided”, e.g:-->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-tomcat</artifactId>
+      <scope>provided</scope>
+    </dependency>
 
     <!-- Spring Data dependencies -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-logging</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -90,11 +104,32 @@
       <scope>provided</scope>
     </dependency>
 
-    <!-- Provided (uncomment for embedded war support) -->
+    <!-- Log4j dependencies -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-tomcat</artifactId>
-      <scope>provided</scope>
+      <artifactId>spring-boot-starter-log4j</artifactId>
+    </dependency>
+
+    <!-- WebJars dependencies -->
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>bootstrap</artifactId>
+      <version>3.3.4</version>
+    </dependency>
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>jquery</artifactId>
+      <version>2.1.3</version>
+    </dependency>
+
+    <!-- Thymeleaf dependencies -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-thymeleaf</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>nz.net.ultraq.thymeleaf</groupId>
+      <artifactId>thymeleaf-layout-dialect</artifactId>
     </dependency>
 
     <!-- Java Mail API -->
@@ -145,28 +180,6 @@
       <artifactId>mysql-connector-java</artifactId>
     </dependency>
 
-    <!-- Thymeleaf dependencies -->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-thymeleaf</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>nz.net.ultraq.thymeleaf</groupId>
-      <artifactId>thymeleaf-layout-dialect</artifactId>
-    </dependency>
-
-    <!-- WebJars dependencies -->
-    <dependency>
-      <groupId>org.webjars</groupId>
-      <artifactId>bootstrap</artifactId>
-      <version>3.3.4</version>
-    </dependency>
-    <dependency>
-      <groupId>org.webjars</groupId>
-      <artifactId>jquery</artifactId>
-      <version>2.1.3</version>
-    </dependency>
-
   </dependencies>
 
   <build>
@@ -179,16 +192,6 @@
       </resource>
       <resource>
         <directory>${basedir}/src/main/webapp</directory>
-        <targetPath>webapp</targetPath>
-        <filtering>false</filtering>
-        <excludes>
-          <!-- These file are excluded because they need to be in classpath:/public folder -->
-          <exclude>resources/</exclude>
-        </excludes>
-      </resource>
-      <resource>
-        <directory>${basedir}/src/main/webapp/resources</directory>
-        <targetPath>public/resources</targetPath>
         <filtering>false</filtering>
         <excludes>
           <!-- These file are excluded because they are compiled and minified by other plugins -->
@@ -196,27 +199,22 @@
           <exclude>**/*.scss</exclude>
         </excludes>
       </resource>
-
     </resources>
 
     <plugins>
-      <!-- Spring boot with Maven -->
+      <!-- Package as an executable jar or war. This does most of the work for us. -->
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
       </plugin>
 
-      <!-- Add Main Class -->
+      <!-- Since we copy web files into classpath to make then available for spring and thymeleaf,
+      this exclusions avoid duplications of webapp content when packaging a war. -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
+        <artifactId>maven-war-plugin</artifactId>
         <configuration>
-          <archive>
-            <manifest>
-              <addClasspath>true</addClasspath>
-              <mainClass>com.Application</mainClass>
-            </manifest>
-          </archive>
+          <packagingExcludes>mails/,resources/,templates/,webpages/</packagingExcludes>
         </configuration>
       </plugin>
 
@@ -228,8 +226,8 @@
         <configuration>
           <coffeeJoinSets>
             <joinSet>
-              <id>main</id>
-              <coffeeOutputDirectory>${project.build.outputDirectory}/public/resources/js</coffeeOutputDirectory>
+              <id>main</id> <!-- This is also the name of the resulting file -->
+              <coffeeOutputDirectory>${project.build.outputDirectory}/resources/js</coffeeOutputDirectory>
               <fileSet>
                 <directory>${basedir}/src/main/webapp/resources/js</directory>
                 <includes>
@@ -238,9 +236,9 @@
               </fileSet>
             </joinSet>
           </coffeeJoinSets>
-          <minifiedFile>${project.build.outputDirectory}/public/resources/js/main.min.js</minifiedFile>
+          <minifiedFile>${project.build.outputDirectory}/resources/js/main.min.js</minifiedFile>
           <setOfFilesToMinify>
-            <directory>${project.build.outputDirectory}/public/resources/js</directory>
+            <directory>${project.build.outputDirectory}/resources/js</directory>
             <includes>
               <include>**/*.js</include>
             </includes>
@@ -270,7 +268,7 @@
             </goals>
             <configuration>
               <sassSourceDirectory>${basedir}/src/main/webapp/resources/css</sassSourceDirectory>
-              <destination>${project.build.outputDirectory}/public/resources/css</destination>
+              <destination>${project.build.outputDirectory}/resources/css</destination>
             </configuration>
           </execution>
         </executions>
@@ -287,9 +285,9 @@
               <goal>minify</goal>
             </goals>
             <configuration>
-              <webappSourceDir>${project.build.outputDirectory}/public/resources</webappSourceDir>
+              <webappSourceDir>${project.build.outputDirectory}/resources</webappSourceDir>
               <cssSourceDir>css</cssSourceDir>
-              <webappTargetDir>${project.build.outputDirectory}/public/resources</webappTargetDir>
+              <webappTargetDir>${project.build.outputDirectory}/resources</webappTargetDir>
               <cssTargetDir>css</cssTargetDir>
               <cssFinalFile>main.min.css</cssFinalFile>
               <nosuffix>true</nosuffix>
@@ -367,5 +365,4 @@
     </repository>-->
 
   </repositories>
-
 </project>

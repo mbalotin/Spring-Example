@@ -1,9 +1,11 @@
 package com.controllers.web;
 
 import com.controllers.AuthController;
+import com.controllers.ConfigurableExample;
 import com.models.Publisher;
 import com.services.MailerService;
 import java.util.Date;
+import javax.annotation.PostConstruct;
 import javax.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -23,7 +25,19 @@ public class PublisherWebController {
   private TemplateEngine templateEngine;
 
   @Autowired
-  MailerService mailerService;
+  private MailerService mailerService;
+
+  @PostConstruct
+  private void postConstructTests() {
+    /**
+     * Testing Injection in Post Construct
+     * MORE INFO: http://stackoverflow.com/questions/27230446/configurable-doesnt-work-for-objects-initialized-in-postconstruct-methods
+     */
+    ConfigurableExample conf = new ConfigurableExample();
+    if (conf.publisherRepository != null) {
+      System.err.println("AUTOWIRED IS NOT NULL HERE BECAUSE OF DEPENDS_ON ANNOTATION");
+    }
+  }
 
   /**
    * http://www.thymeleaf.org/doc/articles/springmail.html
