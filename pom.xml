@@ -359,6 +359,7 @@
   <repositories>
 
     <!-- Add Local repositories -->
+    <!-- EXAMPLE: https://devcenter.heroku.com/articles/local-maven-dependencies-->
     <!--    <repository>
       <id>project.local</id>
       <name>project</name>

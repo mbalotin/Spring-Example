@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html layout:decorator="default">
+
+  <!-- /* Content of this page will be decorated by the elements of default.html */ -->
+  <div layout:fragment="content">
+    <p th:text="#{greeting(${name})}" />
+  </div>
+
+</html>

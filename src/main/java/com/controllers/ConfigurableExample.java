@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 
 /**
- * http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/beans/factory/annotation/Configurable.html
+ * http://docs.spring.io/spring/docs/current/spring-framework-reference/html/aop.html#aop-using-aspectj
  *
  * @Configurable can be used to inject(@Autowired) in a class that isn't instantiate by spring (new Class).
  */

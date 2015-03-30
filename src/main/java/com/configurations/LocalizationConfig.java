@@ -17,11 +17,15 @@ public class LocalizationConfig extends WebMvcConfigurerAdapter {
    */
   @Bean
   ReloadableResourceBundleMessageSource messageSource() {
-    ReloadableResourceBundleMessageSource source = new ReloadableResourceBundleMessageSource();
-    source.setFallbackToSystemLocale(false);
-    source.setBasenames("classpath:i18n/messages");
+    ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
     //source.setBasenames("classpath:i18n/messages", "classpath:i18n/ValidationMessages", "classpath:i18n/email");
-    return source;
+    messageSource.setBasenames("classpath:i18n/messages");
+    // if true, the key of the message will be displayed if the key is not
+    // found, instead of throwing a NoSuchMessageException
+    messageSource.setUseCodeAsDefaultMessage(true);
+    // # -1 : never reload, 0 always reload
+    messageSource.setCacheSeconds(0);
+    return messageSource;
   }
 
   /**
