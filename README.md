@@ -41,8 +41,8 @@ So far, the project includes:
 - Your Github markdown README.md file is automatically transformed into a webpage.
 - External application.properties file to override any properties you want during runtime.
 - Maven local repository example in pom.xml. (Example: https://devcenter.heroku.com/articles/local-maven-dependencies).
-- Works out of the box as both JAR and WAR.
-- JAr running on embedded Tomcat. Can be easily switched to Jetty (http://docs.spring.io/spring-boot/docs/current/reference/html/howto-embedded-servlet-containers.html#howto-use-jetty-instead-of-tomcat).
+- Works out of the box as both JAR and WAR (http://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#build-tool-plugins-maven-packaging). 
+- JAR running on embedded Tomcat. Can be easily switched to Jetty (http://docs.spring.io/spring-boot/docs/current/reference/html/howto-embedded-servlet-containers.html#howto-use-jetty-instead-of-tomcat).
 - More examples and explanations are in code comments.
 
 ####WARNING:
