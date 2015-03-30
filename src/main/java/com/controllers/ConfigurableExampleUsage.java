@@ -6,7 +6,7 @@ import org.springframework.stereotype.Controller;
 
 @Controller
 @DependsOn("org.springframework.context.config.internalBeanConfigurerAspect")
-public class UseConfigurableExample {
+public class ConfigurableExampleUsage {
 
   @PostConstruct
   private void postConstructTests() {

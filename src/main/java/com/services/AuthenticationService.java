@@ -1,9 +1,13 @@
-package com.controllers;
+package com.services;
 
-import com.controllers.rest.UserController;
+import com.daos.RoleRepository;
+import com.daos.UserRepository;
 import com.models.AuthUser;
+import com.models.Role;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,64 +18,82 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 
 /*
- * EXAMPLES: http://kielczewski.eu/2014/12/spring-boot-security-application/
+ NICE TUTORIAL: http://kielczewski.eu/2014/12/spring-boot-security-application/
  */
-@Controller
-public class AuthController implements UserDetailsService {
+@Service
+public class AuthenticationService implements UserDetailsService {
 
-  @Value("${com.admin.name}")
-  private String mongoAdminUser;
+  @Value("${com.admin.username}")
+  private String adminUsername;
 
   @Value("${com.admin.password}")
-  private String mongoAdminPass;
+  private String adminPassword;
 
   @Value("${com.admin.email}")
-  private String mongoAdminEmail;
+  private String adminEmail;
+
+  @Value("#{'${com.admin.roles}'.split(',')}")
+  private Collection<String> adminRoles;
 
   @Autowired
-  private UserController userController;
+  private UserRepository userRepository;
+
+  @Autowired
+  private RoleRepository roleRepository;
 
   @PostConstruct
   public void createAdmin() {
-    String encryptedPassword = AuthUser.encryptPassword(mongoAdminPass);
-    AuthUser admin = userController.getUser(mongoAdminUser);
+    String encryptedPassword = AuthUser.encryptPassword(adminPassword);
+    AuthUser admin = Optional.ofNullable(userRepository.findByUsername(adminUsername)).orElse(new AuthUser());
 
-    if (admin == null) {
-      admin = new AuthUser();
-      admin.setUsername(mongoAdminUser);
-    }
+    adminRoles.forEach((role) -> admin.addRole(getRoleByName(role)));
 
+    admin.setUsername(adminUsername);
     admin.setPassword(encryptedPassword);
-    admin.setEmail(mongoAdminEmail);
-    admin.setUserRole(1);
-    userController.saveUser(admin);
+    admin.setEmail(adminEmail);
+    userRepository.save(admin);
   }
 
   public AuthUser getAuthenticatedUser() {
-    User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    return userController.getUser(user.getUsername());
+    String username = SecurityContextHolder.getContext().getAuthentication().getName();
+    return userRepository.findByUsername(username);
+  }
+
+  public AuthUser getAuthenticatedUserByName(String username) throws UsernameNotFoundException {
+    return Optional.ofNullable(userRepository.findByUsername(username))
+            .orElseThrow(() -> new UsernameNotFoundException(String.format("User with username: %s was not found", username)));
   }
 
   @Override
-  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    AuthUser user = userController.getUser(username).orElseThrow(() -> new UsernameNotFoundException(String.format("User with email=%s was not found", username)));
-    User userDetail = new User(user.getUsername(), user.getPassword(), true, true, true, true, getAuthorities(user.getUserRole()));
-    return userDetail;
+  public UserDetails loadUserByUsername(String username) {
+    AuthUser domainUser = getAuthenticatedUserByName(username);
+
+    boolean enabled = true;
+    boolean accountNonExpired = true;
+    boolean credentialsNonExpired = true;
+    boolean accountNonLocked = true;
+
+    return new User(
+            domainUser.getUsername(),
+            domainUser.getPassword(),
+            enabled,
+            accountNonExpired,
+            credentialsNonExpired,
+            accountNonLocked,
+            getAuthorities(domainUser.getRoles()));
+
   }
 
-  private List<GrantedAuthority> getAuthorities(Integer role) {
+  private Role getRoleByName(String rolename) {
+    return Optional.ofNullable(roleRepository.findByRolename(rolename.trim())).orElse(new Role(rolename.trim()));
+  }
+
+  private List<GrantedAuthority> getAuthorities(Collection<Role> roles) {
     final List<GrantedAuthority> authList = new ArrayList<>();
-    switch (role) {
-      case 1:
-        authList.add(new SimpleGrantedAuthority("ROLE_USER"));
-        authList.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-        break;
-      case 2:
-        authList.add(new SimpleGrantedAuthority("ROLE_USER"));
-    }
+    roles.forEach((role) -> authList.add(new SimpleGrantedAuthority(role.getRolename())));
     return authList;
   }
 

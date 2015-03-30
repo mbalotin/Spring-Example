@@ -15,7 +15,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(exclude = {"id"})
 public class Script implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = -4271794105905772564L;
 
   @Id
   @JsonIgnore
@@ -25,8 +25,7 @@ public class Script implements Serializable {
   private String name;
 
   @ManyToOne
-  @JsonIgnore
-  private AuthUser user;
+  private AuthUser owner;
 
   private String content;
   private String description;

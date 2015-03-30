@@ -1,7 +1,6 @@
 package com.daos;
 
-import com.models.AuthUser;
-import java.util.Collection;
+import com.models.Role;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -16,15 +15,12 @@ import org.springframework.stereotype.Repository;
  If you choose this path, you may want to look into QueryDsl: http://www.querydsl.com/ for type safe queries.
  */
 @Repository
-public interface UserRepository extends CrudRepository<AuthUser, Long> {
+public interface RoleRepository extends CrudRepository<Role, Long> {
 
   /* If not using spring data, we can use EntityManager like this:
    @PersistenceContext
    private EntityManager entityManager;
    */
-  AuthUser findByUsername(String username);
-
-  @Override
-  Collection<AuthUser> findAll();
+  Role findByRolename(String rolename);
 
 }

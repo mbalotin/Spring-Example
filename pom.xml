@@ -49,7 +49,7 @@
       </exclusions>
     </dependency>
 
-    <!-- Spring Boot Test dependencies -->
+    <!-- Spring Boot Test dependencies http://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
@@ -73,6 +73,7 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-security</artifactId>
     </dependency>
+
 
     <!-- Log4j dependencies -->
     <dependency>

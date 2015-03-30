@@ -3,15 +3,20 @@ package com.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import lombok.AccessLevel;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -20,7 +25,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EqualsAndHashCode(exclude = {"id"})
 public class AuthUser implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1580575863133427801L;
 
   @Id
   @JsonIgnore
@@ -28,25 +33,25 @@ public class AuthUser implements Serializable {
   private long id;
 
   private String username;
-
-  /**
-   * Removing lombok here so we can set JsonIgnore only in getter.
-   */
-  @Getter(AccessLevel.NONE)
-  @Setter(AccessLevel.NONE)
   private String password;
-
   private String email;
 
-  @JsonIgnore
-  private int userRole = 2;
+  @OneToMany
+  private Collection<Script> scripts;
 
-  public static String encryptPassword(final String password) {
+  @JsonIgnore
+  @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+  private Set<Role> roles;
+
+  public static String encryptPassword(String password) {
     PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     String encodedPassword = passwordEncoder.encode(password);
     return encodedPassword;
   }
 
+  /**
+   Ignoring lombok here so we can set JsonIgnore only in getter.
+   */
   @JsonIgnore
   public String getPassword() {
     return password;
@@ -55,6 +60,11 @@ public class AuthUser implements Serializable {
   @JsonProperty
   public void setPassword(String password) {
     this.password = password;
+  }
+
+  public void addRole(Role role) {
+    roles = Optional.ofNullable(roles).orElse(new HashSet<Role>());
+    roles.add(role);
   }
 
 }

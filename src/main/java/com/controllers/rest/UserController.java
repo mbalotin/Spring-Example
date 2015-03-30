@@ -1,9 +1,10 @@
 package com.controllers.rest;
 
+import com.daos.RoleRepository;
 import com.daos.UserRepository;
 import com.models.AuthUser;
 import java.io.IOException;
-import java.util.List;
+import java.util.Collection;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,6 +12,7 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.io.Resource;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,6 +29,9 @@ public class UserController {
   @Autowired
   private UserRepository userRepository;
 
+  @Autowired
+  private RoleRepository roleRepository;
+
   @Value("classpath:/examples/userExample.json")
   private Resource userExample;
 
@@ -37,7 +42,7 @@ public class UserController {
 
   @Secured("ROLE_ADMIN")
   @RequestMapping(value = "list")
-  public List<AuthUser> getAllUserData() {
+  public Collection<AuthUser> getAllUserData() {
     return userRepository.findAll();
   }
 
@@ -45,19 +50,21 @@ public class UserController {
   @RequestMapping(value = "new", method = RequestMethod.POST)
   public AuthUser postNewUser(@RequestBody AuthUser user) {
 
+    //TODO: Can I do this check better?
     if (user.getUsername() == null || user.getEmail() == null || user.getPassword() == null) {
       throw new IllegalArgumentException("One or more fields are empty. {username | email | password}");
     }
 
     String encryptedPassword = AuthUser.encryptPassword(user.getPassword());
     user.setPassword(encryptedPassword);
+    user.addRole(roleRepository.findByRolename("ROLE_USER"));
     saveUser(user);
 
     return user;
   }
 
   @Cacheable
-  public AuthUser getUser(String username) {
+  public AuthUser getUserByName(String username) throws UsernameNotFoundException {
     return userRepository.findByUsername(username);
   }
 

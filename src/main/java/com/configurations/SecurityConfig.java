@@ -1,55 +1,59 @@
 package com.configurations;
 
-import com.controllers.AuthController;
+import com.services.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
-/**
- * TODO: CAN THIS BE IMPROVED WITH PROPERTIES OR ANNOTATIONS?
- * SPRING HAS SECURITY PROPERTIES THAT SEEN TO DO WHAT HERE IS DONE PROGRAMATICALLY;
+/*
+ NICE TUTORIAL: http://kielczewski.eu/2014/12/spring-boot-security-application/
+ If you want CSFR: http://docs.spring.io/spring-security/site/docs/3.2.x/reference/htmlsingle/#csrf
  */
 @Configuration
+@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Autowired
-  private AuthController userDetailsService;
+  private AuthenticationService userDetailsService;
 
   /*
-   * Basic Authentication configuration for both WEB and REST.
+   Basic Authentication configuration for both WEB and REST.
+   */
+  @Override
+  protected void configure(HttpSecurity http) throws Exception {
+    http.csrf().disable().authorizeRequests()
+            .antMatchers("/").permitAll()
+            .antMatchers("/**").authenticated()
+            .and()
+            .httpBasic();
+  }
+
+
+  /*
+   Login authentication with Login/Logout pages for WEB ONLY.
    */
   /*
    @Override
    protected void configure(HttpSecurity http) throws Exception {
    http.csrf().disable().authorizeRequests()
-   .antMatchers("/").permitAll()
-   .antMatchers("/**").authenticated()
+   .antMatchers("/", "/js/**", "/css/**", "/images/**", "/webjars/**").permitAll()
+   .anyRequest().fullyAuthenticated()
    .and()
-   .httpBasic();
+   .formLogin()
+   .loginPage("/login").failureUrl("/login?error").permitAll()
+   .and()
+   .logout().logoutUrl("/logout").deleteCookies("remember-me").logoutSuccessUrl("/").permitAll()
+   .and()
+   .rememberMe();
    }
    */
-
-  /*
-   * Login authentication with Login/Logout pages for WEB ONLY.
-   * CSRF is enabled and is not needed in REST.
-   */
-  @Override
-  protected void configure(HttpSecurity http) throws Exception {
-    http.authorizeRequests()
-            .antMatchers("/", "/resources/**", "/webjars/**").permitAll()
-            .anyRequest().authenticated()
-            .and()
-            .formLogin().loginPage("/login").permitAll()
-            .and().logout().permitAll();
-  }
-
   @Override
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-    PasswordEncoder encoder = new BCryptPasswordEncoder();
-    auth.userDetailsService(userDetailsService).passwordEncoder(encoder);
+    auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
   }
 }

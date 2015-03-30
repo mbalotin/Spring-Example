@@ -1,9 +1,9 @@
 package com.controllers.rest;
 
-import com.controllers.AuthController;
 import com.daos.ScriptRepository;
 import com.models.AuthUser;
 import com.models.Script;
+import com.services.AuthenticationService;
 import java.io.IOException;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
@@ -30,7 +30,7 @@ public class ScriptController {
   private Resource scriptExample;
 
   @Autowired
-  private AuthController authentication;
+  private AuthenticationService authentication;
 
   @Autowired
   private ScriptRepository scriptRepository;
@@ -48,7 +48,7 @@ public class ScriptController {
       throw new IllegalArgumentException("One or more required fields are empty. {name | content}");
     }
 
-    script.setUser(owner);
+    script.setOwner(owner);
     scriptRepository.save(script);
 
     return script;

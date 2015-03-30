@@ -1,6 +1,6 @@
 package com.controllers.web;
 
-import com.controllers.AuthController;
+import com.services.AuthenticationService;
 import com.models.AuthUser;
 import com.services.MailerService;
 import java.util.Date;
@@ -17,7 +17,7 @@ import org.thymeleaf.context.Context;
 public class UserWebController {
 
   @Autowired
-  private AuthController authentication;
+  private AuthenticationService authentication;
 
   @Autowired
   private TemplateEngine templateEngine;

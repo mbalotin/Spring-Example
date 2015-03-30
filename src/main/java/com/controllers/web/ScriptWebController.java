@@ -1,11 +1,11 @@
 package com.controllers.web;
 
-import com.controllers.AuthController;
 import com.daos.ScriptRepository;
 import com.models.AuthUser;
 import com.models.Script;
+import com.services.AuthenticationService;
 import java.io.IOException;
-import java.util.List;
+import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,21 +16,19 @@ import org.springframework.web.servlet.ModelAndView;
 public class ScriptWebController {
 
   @Autowired
-  private AuthController authentication;
+  private AuthenticationService authentication;
 
   @Autowired
   private ScriptRepository scriptRepository;
 
   @RequestMapping()
   public ModelAndView getScriptList() throws IOException {
-    ModelAndView model = new ModelAndView("scripts");
-    model.addObject("scripts", getAllScripts());
-    return model;
+    return new ModelAndView("scripts", "scripts", getAllScripts());
   }
 
-  public List<Script> getAllScripts() {
+  public Collection<Script> getAllScripts() {
     AuthUser user = authentication.getAuthenticatedUser();
-    return scriptRepository.findAllByUser(user);
+    return scriptRepository.findAllByOwner(user);
   }
 
 }
