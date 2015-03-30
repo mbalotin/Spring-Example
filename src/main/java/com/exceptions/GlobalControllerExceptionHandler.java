@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 /**
  This is a user friendly way of returning errors in rest requests.
  You can add new errors of rest methods here.
+ http://www.jayway.com/2014/10/19/spring-boot-error-responses/
+ http://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc
  */
 @ControllerAdvice
 class GlobalControllerExceptionHandler {
