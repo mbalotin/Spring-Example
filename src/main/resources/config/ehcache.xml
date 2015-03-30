@@ -6,7 +6,7 @@
 
   <diskStore path="java.io.tmpdir" />
 
-  <cache name="publishers"
+  <cache name="users"
          maxElementsInMemory="10000"
          eternal="true"
          overflowToDisk="false"

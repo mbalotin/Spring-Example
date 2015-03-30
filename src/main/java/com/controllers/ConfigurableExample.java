@@ -1,6 +1,6 @@
 package com.controllers;
 
-import com.daos.PublisherRepository;
+import com.daos.UserRepository;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Configurable;
 public class ConfigurableExample {
 
   @Autowired
-  public PublisherRepository publisherRepository;
+  public UserRepository userRepository;
 
   /**
    * THIS DOES NOT WORK!!!

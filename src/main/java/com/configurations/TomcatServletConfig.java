@@ -39,6 +39,10 @@ public class TomcatServletConfig {
       }
     };
     factory.addAdditionalTomcatConnectors(this.createConnection());
+
+    //Set timeout for tomcat and custom error pages.
+    factory.setSessionTimeout(10, TimeUnit.MINUTES);
+    //factory.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/notfound.html"));
     return factory;
   }
 
@@ -48,19 +52,6 @@ public class TomcatServletConfig {
     connector.setPort(80);
     connector.setRedirectPort(443);
     return connector;
-  }
-
-  /**
-   * Set timeout for tomcat and custom error pages.
-   *
-   * @return EmbeddedServletContainerFactory
-   */
-  @Bean
-  public EmbeddedServletContainerFactory servletContainer() {
-    TomcatEmbeddedServletContainerFactory factory = new TomcatEmbeddedServletContainerFactory();
-    factory.setSessionTimeout(10, TimeUnit.MINUTES);
-    //factory.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/notfound.html"));
-    return factory;
   }
 
 }

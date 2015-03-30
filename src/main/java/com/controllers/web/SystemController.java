@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 class SystemController {
 
-  @RequestMapping("/actuator")
+  @RequestMapping("actuator")
   public String actuator() {
     return "admin/actuator";
   }

@@ -1,6 +1,6 @@
 package com.daos;
 
-import com.models.Publisher;
+import com.models.AuthUser;
 import com.models.Script;
 import java.util.List;
 import org.springframework.data.repository.CrudRepository;
@@ -23,8 +23,8 @@ public interface ScriptRepository extends CrudRepository<Script, Long> {
    @PersistenceContext
    private EntityManager entityManager;
    */
-  Script findByNameAndPublisher(String username, Publisher publisher);
+  Script findByNameAndUser(String username, AuthUser user);
 
-  List<Script> findAllByPublisher(Publisher publisher);
+  List<Script> findAllByUser(AuthUser user);
 
 }

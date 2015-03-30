@@ -1,7 +1,7 @@
 package com.controllers.rest;
 
-import com.daos.PublisherRepository;
-import com.models.Publisher;
+import com.daos.UserRepository;
+import com.models.AuthUser;
 import java.io.IOException;
 import java.util.List;
 import org.apache.commons.io.IOUtils;
@@ -20,49 +20,49 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Transactional(propagation = Propagation.REQUIRED)
-@RequestMapping("publishers")
-@CacheConfig(cacheNames = "publishers")
-public class PublisherController {
+@RequestMapping("users")
+@CacheConfig(cacheNames = "users")
+public class UserController {
 
   @Autowired
-  private PublisherRepository publisherRepository;
+  private UserRepository userRepository;
 
-  @Value("classpath:/examples/publisherExample.json")
-  private Resource publisherExample;
+  @Value("classpath:/examples/userExample.json")
+  private Resource userExample;
 
   @Secured("ROLE_ADMIN")
-  public String getPublisherExample() throws IOException {
-    return IOUtils.toString(publisherExample.getInputStream());
+  public String getUserExample() throws IOException {
+    return IOUtils.toString(userExample.getInputStream());
   }
 
   @Secured("ROLE_ADMIN")
   @RequestMapping(value = "list")
-  public List<Publisher> getAllPublishersData() {
-    return publisherRepository.findAll();
+  public List<AuthUser> getAllUserData() {
+    return userRepository.findAll();
   }
 
   @Secured("ROLE_ADMIN")
   @RequestMapping(value = "new", method = RequestMethod.POST)
-  public Publisher postNewPublisher(@RequestBody Publisher publisher) {
+  public AuthUser postNewUser(@RequestBody AuthUser user) {
 
-    if (publisher.getUsername() == null || publisher.getEmail() == null || publisher.getPassword() == null) {
+    if (user.getUsername() == null || user.getEmail() == null || user.getPassword() == null) {
       throw new IllegalArgumentException("One or more fields are empty. {username | email | password}");
     }
 
-    String encryptedPassword = Publisher.encryptPassword(publisher.getPassword());
-    publisher.setPassword(encryptedPassword);
-    savePublisher(publisher);
+    String encryptedPassword = AuthUser.encryptPassword(user.getPassword());
+    user.setPassword(encryptedPassword);
+    saveUser(user);
 
-    return publisher;
+    return user;
   }
 
   @Cacheable
-  public Publisher getPublisher(String username) {
-    return publisherRepository.findByUsername(username);
+  public AuthUser getUser(String username) {
+    return userRepository.findByUsername(username);
   }
 
-  public void savePublisher(Publisher publisher) {
-    publisherRepository.save(publisher);
+  public void saveUser(AuthUser user) {
+    userRepository.save(user);
   }
 
 }

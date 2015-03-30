@@ -18,7 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Data
 @Entity
 @EqualsAndHashCode(exclude = {"id"})
-public class Publisher implements Serializable {
+public class AuthUser implements Serializable {
 
   private static final long serialVersionUID = 1L;
 

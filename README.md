@@ -27,7 +27,7 @@ So far, the project includes:
  - Spring SSL support, with Maven copying your keystore.jks automatically.
  - Spring Mail (with thymeleaf templates, just like webpages and attachment support).
  - Spring MVC Internationalization.
- - Spring Profiles (development and production, with dev as default. To run your JAR in production, simply pass --env="production" to java -jar, or change the spring.profiles.active to ${env:production} in application.properties) 
+ - Spring Profiles development and production, with dev as default. To run your JAR in production, simply pass --env="production" to java -jar, or change the spring.profiles.active to ${env:production} in application.properties. Running in production requires root access as only root can deploy to ports 80 and 443.
  - Spring + Compile Time Weave with AspectJ for @Configurable support. (http://docs.spring.io/spring/docs/current/spring-framework-reference/html/aop.html#aop-using-aspectj).
  - Spring actuator (http://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/#production-ready).
  - Spring global rest exceptions (for user-friendly exception handling in rest requests).

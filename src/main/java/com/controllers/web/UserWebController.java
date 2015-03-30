@@ -1,7 +1,7 @@
 package com.controllers.web;
 
 import com.controllers.AuthController;
-import com.models.Publisher;
+import com.models.AuthUser;
 import com.services.MailerService;
 import java.util.Date;
 import javax.mail.MessagingException;
@@ -14,7 +14,7 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 @Controller
-public class PublisherWebController {
+public class UserWebController {
 
   @Autowired
   private AuthController authentication;
@@ -30,10 +30,10 @@ public class PublisherWebController {
    *
    * @throws javax.mail.MessagingException
    */
-  @RequestMapping(value = "sendSubscriptionToPublisher", method = RequestMethod.GET)
-  public void sendSubscriptionToPublisher() throws MessagingException {
+  @RequestMapping(value = "sendSubscriptionToUser", method = RequestMethod.GET)
+  public void sendSubscriptionToUser() throws MessagingException {
 
-    Publisher user = authentication.getAuthenticatedUser();
+    AuthUser user = authentication.getAuthenticatedUser();
 
     // Prepare the evaluation context
     Context ctx = new Context(LocaleContextHolder.getLocale());

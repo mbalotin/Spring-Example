@@ -1,7 +1,7 @@
 package com.controllers;
 
-import com.controllers.rest.PublisherController;
-import com.models.Publisher;
+import com.controllers.rest.UserController;
+import com.models.AuthUser;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -16,6 +16,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 
+/*
+ * EXAMPLES: http://kielczewski.eu/2014/12/spring-boot-security-application/
+ */
 @Controller
 public class AuthController implements UserDetailsService {
 
@@ -29,37 +32,37 @@ public class AuthController implements UserDetailsService {
   private String mongoAdminEmail;
 
   @Autowired
-  private PublisherController publisherController;
+  private UserController userController;
 
   @PostConstruct
   public void createAdmin() {
-    String encryptedPassword = Publisher.encryptPassword(mongoAdminPass);
-    Publisher admin = publisherController.getPublisher(mongoAdminUser);
+    String encryptedPassword = AuthUser.encryptPassword(mongoAdminPass);
+    AuthUser admin = userController.getUser(mongoAdminUser);
 
     if (admin == null) {
-      admin = new Publisher();
+      admin = new AuthUser();
       admin.setUsername(mongoAdminUser);
     }
 
     admin.setPassword(encryptedPassword);
     admin.setEmail(mongoAdminEmail);
     admin.setUserRole(1);
-    publisherController.savePublisher(admin);
+    userController.saveUser(admin);
   }
 
-  public Publisher getAuthenticatedUser() {
+  public AuthUser getAuthenticatedUser() {
     User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    return publisherController.getPublisher(user.getUsername());
+    return userController.getUser(user.getUsername());
   }
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    Publisher user = publisherController.getPublisher(username);
+    AuthUser user = userController.getUser(username).orElseThrow(() -> new UsernameNotFoundException(String.format("User with email=%s was not found", username)));
     User userDetail = new User(user.getUsername(), user.getPassword(), true, true, true, true, getAuthorities(user.getUserRole()));
     return userDetail;
   }
 
-  public List<GrantedAuthority> getAuthorities(Integer role) {
+  private List<GrantedAuthority> getAuthorities(Integer role) {
     final List<GrantedAuthority> authList = new ArrayList<>();
     switch (role) {
       case 1:

@@ -2,7 +2,7 @@ package com.controllers.web;
 
 import com.controllers.AuthController;
 import com.daos.ScriptRepository;
-import com.models.Publisher;
+import com.models.AuthUser;
 import com.models.Script;
 import java.io.IOException;
 import java.util.List;
@@ -29,8 +29,8 @@ public class ScriptWebController {
   }
 
   public List<Script> getAllScripts() {
-    Publisher user = authentication.getAuthenticatedUser();
-    return scriptRepository.findAllByPublisher(user);
+    AuthUser user = authentication.getAuthenticatedUser();
+    return scriptRepository.findAllByUser(user);
   }
 
 }

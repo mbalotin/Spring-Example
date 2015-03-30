@@ -1,6 +1,6 @@
 package com.daos;
 
-import com.models.Publisher;
+import com.models.AuthUser;
 import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -16,15 +16,15 @@ import org.springframework.stereotype.Repository;
  * If you choose this path, you may want to look into QueryDsl: http://www.querydsl.com/ for type safe queries.
  */
 @Repository
-public interface PublisherRepository extends CrudRepository<Publisher, Long> {
+public interface UserRepository extends CrudRepository<AuthUser, Long> {
 
   /*If not using spring data, we can use EntityManager like this:
    @PersistenceContext
    private EntityManager entityManager;
    */
-  Publisher findByUsername(String username);
+  AuthUser findByUsername(String username);
 
   @Override
-  List<Publisher> findAll();
+  List<AuthUser> findAll();
 
 }

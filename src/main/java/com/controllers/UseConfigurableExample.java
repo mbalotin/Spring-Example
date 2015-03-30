@@ -16,7 +16,7 @@ public class UseConfigurableExample {
      * MORE INFO: http://stackoverflow.com/questions/27230446/configurable-doesnt-work-for-objects-initialized-in-postconstruct-methods
      */
     ConfigurableExample conf = new ConfigurableExample();
-    if (conf.publisherRepository != null) {
+    if (conf.userRepository != null) {
       System.err.println("AUTOWIRED IS NOT NULL HERE BECAUSE OF DEPENDS_ON ANNOTATION");
     }
   }

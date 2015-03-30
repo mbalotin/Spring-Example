@@ -2,7 +2,7 @@ package com.controllers.rest;
 
 import com.controllers.AuthController;
 import com.daos.ScriptRepository;
-import com.models.Publisher;
+import com.models.AuthUser;
 import com.models.Script;
 import java.io.IOException;
 import org.apache.commons.io.IOUtils;
@@ -42,13 +42,13 @@ public class ScriptController {
 
   @RequestMapping(value = "new", method = RequestMethod.POST)
   public Script postNewScript(@RequestBody Script script) {
-    Publisher owner = authentication.getAuthenticatedUser();
+    AuthUser owner = authentication.getAuthenticatedUser();
 
     if (script.getName() == null || script.getContent() == null) {
       throw new IllegalArgumentException("One or more required fields are empty. {name | content}");
     }
 
-    script.setPublisher(owner);
+    script.setUser(owner);
     scriptRepository.save(script);
 
     return script;

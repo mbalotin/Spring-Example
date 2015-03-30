@@ -19,6 +19,8 @@
   </parent>
 
   <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.resources.sourceEncoding>UTF-8</project.resources.sourceEncoding>
     <!-- This is used by spring boot to set java version and Main class (for jar).-->
     <java.version>1.8</java.version>
     <start-class>com.Application</start-class>
@@ -34,33 +36,29 @@
       <scope>provided</scope>
     </dependency>-->
 
-    <!-- Spring Data dependencies -->
+    <!-- Spring Boot Starter Core dependencies -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter</artifactId>
       <exclusions>
+        <!-- Exclude default loggin in favor of log4j -->
         <exclusion>
           <groupId>org.springframework.boot</groupId>
           <artifactId>spring-boot-starter-logging</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-data-jpa</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-context-support</artifactId>
-    </dependency>
+
+    <!-- Spring Boot Test dependencies -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
-      <scope>test</scope>
+    </dependency>
+
+    <!-- Spring MCV dependencies -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
 
     <!-- Spring Metrics dependencies -->
@@ -72,42 +70,34 @@
 
     <!-- Spring Security dependencies -->
     <dependency>
-      <groupId>org.springframework.security</groupId>
-      <artifactId>spring-security-web</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.security</groupId>
-      <artifactId>spring-security-config</artifactId>
-    </dependency>
-
-    <!-- Spring AOP + AspectJ -->
-    <dependency>
-      <groupId>org.aspectj</groupId>
-      <artifactId>aspectjrt</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-aspects</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.security</groupId>
-      <artifactId>spring-security-aspects</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-instrument</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>javax.persistence</groupId>
-      <artifactId>persistence-api</artifactId>
-      <version>1.0</version>
-      <scope>provided</scope>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-security</artifactId>
     </dependency>
 
     <!-- Log4j dependencies -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-log4j</artifactId>
+    </dependency>
+
+    <!-- Thymeleaf dependencies -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-thymeleaf</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>nz.net.ultraq.thymeleaf</groupId>
+      <artifactId>thymeleaf-layout-dialect</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.thymeleaf.extras</groupId>
+      <artifactId>thymeleaf-extras-springsecurity3</artifactId>
+    </dependency>
+
+    <!-- Mail dependencies -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-mail</artifactId>
     </dependency>
 
     <!-- WebJars dependencies -->
@@ -122,23 +112,6 @@
       <version>2.1.3</version>
     </dependency>
 
-    <!-- Thymeleaf dependencies -->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-thymeleaf</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>nz.net.ultraq.thymeleaf</groupId>
-      <artifactId>thymeleaf-layout-dialect</artifactId>
-    </dependency>
-
-    <!-- Java Mail API -->
-    <dependency>
-      <groupId>javax.mail</groupId>
-      <artifactId>mail</artifactId>
-      <version>1.5.0-b01</version>
-    </dependency>
-
     <!-- Commons dependencies  -->
     <dependency>
       <groupId>commons-validator</groupId>
@@ -151,6 +124,10 @@
     </dependency>
 
     <!-- Ehcache dependencies -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context-support</artifactId>
+    </dependency>
     <dependency>
       <groupId>net.sf.ehcache</groupId>
       <artifactId>ehcache</artifactId>
@@ -174,7 +151,11 @@
       <artifactId>lombok</artifactId>
     </dependency>
 
-    <!-- Mysql dependencies -->
+    <!-- Database dependencies -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-jpa</artifactId>
+    </dependency>
     <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
@@ -299,14 +280,22 @@
         </executions>
       </plugin>
 
-      <!-- Compile time weaver for Configurable classes -->
+      <!-- Compile time weaver for Configurable classes - http://mojo.codehaus.org/aspectj-maven-plugin/usage.html -->
       <!-- https://palesz.wordpress.com/2011/12/03/howto-maven-lombok-and-aspectj-together/ -->
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>aspectj-maven-plugin</artifactId>
         <version>1.7</version>
+        <dependencies>
+          <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjtools</artifactId>
+            <version>${aspectj.version}</version> <!-- This version is set by Spring Boot -->
+          </dependency>
+        </dependencies>
         <executions>
           <execution>
+            <phase>process-classes</phase>
             <goals>
               <goal>compile</goal>
             </goals>
@@ -323,6 +312,7 @@
                   <artifactId>spring-aspects</artifactId>
                 </aspectLibrary>
               </aspectLibraries>
+              <encoding>UTF-8</encoding>
               <source>${java.version}</source>
               <target>${java.version}</target>
               <complianceLevel>${java.version}</complianceLevel>

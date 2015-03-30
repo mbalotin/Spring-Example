@@ -26,7 +26,7 @@ public class Script implements Serializable {
 
   @ManyToOne
   @JsonIgnore
-  private Publisher publisher;
+  private AuthUser user;
 
   private String content;
   private String description;
