@@ -19,8 +19,8 @@
   </parent>
 
   <properties>
-    <!-- This is used by spring boot to set java version and Main class.-->
-    <java.version>1.7</java.version>
+    <!-- This is used by spring boot to set java version and Main class (for jar).-->
+    <java.version>1.8</java.version>
     <start-class>com.Application</start-class>
   </properties>
 

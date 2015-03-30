@@ -28,7 +28,7 @@ public class ReadMeController {
       String readMeString = IOUtils.toString(readMeMark.getInputStream());
       readMe = new Markdown4jProcessor().process(readMeString);
     } catch (IOException ex) {
-      logger.error("Error creating readme file from markdown.");
+      logger.error("Error creating readme file from markdown. ERROR: " + ex.getMessage());
     }
   }
 

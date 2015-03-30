@@ -26,6 +26,8 @@ public class LocalizationConfig extends WebMvcConfigurerAdapter {
 
   /**
    * This interceptor allows changes in the locale by passing ?language=XX to any request
+   *
+   * @param registry
    */
   @Override
   public void addInterceptors(InterceptorRegistry registry) {

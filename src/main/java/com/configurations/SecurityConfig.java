@@ -10,6 +10,10 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+/**
+ * TODO: CAN THIS BE IMPROVED WITH PROPERTIES?
+ * SPRING HAS SECURITY PROPERTIES THAT SEEN TO DO WHAT HERE IS DONE PROGRAMATICALLY;
+ */
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
