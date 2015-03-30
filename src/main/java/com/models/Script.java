@@ -12,7 +12,7 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @Entity
-@EqualsAndHashCode(exclude = {"id"})
+@EqualsAndHashCode(exclude = {"id", "owner"})
 public class Script implements Serializable {
 
   private static final long serialVersionUID = -4271794105905772564L;
@@ -23,12 +23,12 @@ public class Script implements Serializable {
   private long id;
 
   private String name;
-
-  @ManyToOne
-  private AuthUser owner;
-
   private String content;
   private String description;
   private String code;
+
+  @JsonIgnore
+  @ManyToOne
+  private AuthUser owner;
 
 }

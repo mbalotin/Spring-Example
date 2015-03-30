@@ -1,8 +1,8 @@
 package com.controllers.rest;
 
-import com.daos.RoleRepository;
 import com.daos.UserRepository;
 import com.models.AuthUser;
+import com.services.AuthenticationService;
 import java.io.IOException;
 import java.util.Collection;
 import org.apache.commons.io.IOUtils;
@@ -30,7 +30,7 @@ public class UserController {
   private UserRepository userRepository;
 
   @Autowired
-  private RoleRepository roleRepository;
+  private AuthenticationService authentication;
 
   @Value("classpath:/examples/userExample.json")
   private Resource userExample;
@@ -57,8 +57,8 @@ public class UserController {
 
     String encryptedPassword = AuthUser.encryptPassword(user.getPassword());
     user.setPassword(encryptedPassword);
-    user.addRole(roleRepository.findByRolename("ROLE_USER"));
-    saveUser(user);
+    user.setRoles(authentication.getUserRoles());
+    userRepository.save(user);
 
     return user;
   }
@@ -66,10 +66,6 @@ public class UserController {
   @Cacheable
   public AuthUser getUserByName(String username) throws UsernameNotFoundException {
     return userRepository.findByUsername(username);
-  }
-
-  public void saveUser(AuthUser user) {
-    userRepository.save(user);
   }
 
 }

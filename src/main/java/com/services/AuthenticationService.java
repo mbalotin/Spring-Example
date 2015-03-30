@@ -6,8 +6,10 @@ import com.models.AuthUser;
 import com.models.Role;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -38,6 +40,9 @@ public class AuthenticationService implements UserDetailsService {
   @Value("#{'${com.admin.roles}'.split(',')}")
   private Collection<String> adminRoles;
 
+  @Value("#{'${com.user.roles}'.split(',')}")
+  private Collection<String> userRoles;
+
   @Autowired
   private UserRepository userRepository;
 
@@ -59,12 +64,22 @@ public class AuthenticationService implements UserDetailsService {
 
   public AuthUser getAuthenticatedUser() {
     String username = SecurityContextHolder.getContext().getAuthentication().getName();
-    return userRepository.findByUsername(username);
+    return getAuthenticatedUserByName(username);
   }
 
   public AuthUser getAuthenticatedUserByName(String username) throws UsernameNotFoundException {
     return Optional.ofNullable(userRepository.findByUsername(username))
             .orElseThrow(() -> new UsernameNotFoundException(String.format("User with username: %s was not found", username)));
+  }
+
+  public Set<Role> getUserRoles() {
+    Set<Role> roles = new HashSet<Role>();
+    userRoles.forEach((role) -> roles.add(getRoleByName(role)));
+    return roles;
+  }
+
+  public Role getRoleByName(String rolename) {
+    return Optional.ofNullable(roleRepository.findByRolename(rolename.trim())).orElse(new Role(rolename.trim()));
   }
 
   @Override
@@ -85,10 +100,6 @@ public class AuthenticationService implements UserDetailsService {
             accountNonLocked,
             getAuthorities(domainUser.getRoles()));
 
-  }
-
-  private Role getRoleByName(String rolename) {
-    return Optional.ofNullable(roleRepository.findByRolename(rolename.trim())).orElse(new Role(rolename.trim()));
   }
 
   private List<GrantedAuthority> getAuthorities(Collection<Role> roles) {

@@ -24,33 +24,33 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   /*
    Basic Authentication configuration for both WEB and REST.
    */
+  @Override
+  protected void configure(HttpSecurity http) throws Exception {
+    http.csrf().disable().authorizeRequests()
+            .antMatchers("/").permitAll()
+            .antMatchers("/**").authenticated()
+            .and()
+            .httpBasic();
+  }
+
+  /*
+   Login authentication with Login/Logout pages for WEB ONLY.
+   */
   /*
    @Override
    protected void configure(HttpSecurity http) throws Exception {
    http.csrf().disable().authorizeRequests()
-   .antMatchers("/").permitAll()
-   .antMatchers("/**").authenticated()
+   .antMatchers("/", "/js/**", "/css/**", "/images/**", "/webjars/**").permitAll()
+   .anyRequest().fullyAuthenticated()
    .and()
-   .httpBasic();
+   .formLogin()
+   .loginPage("/login").failureUrl("/login?error").permitAll()
+   .and()
+   .logout().logoutUrl("/logout").deleteCookies("remember-me").logoutSuccessUrl("/").permitAll()
+   .and()
+   .rememberMe();
    }
    */
-  /*
-   Login authentication with Login/Logout pages for WEB ONLY.
-   */
-  @Override
-  protected void configure(HttpSecurity http) throws Exception {
-    http.csrf().disable().authorizeRequests()
-            .antMatchers("/", "/js/**", "/css/**", "/images/**", "/webjars/**").permitAll()
-            .anyRequest().fullyAuthenticated()
-            .and()
-            .formLogin()
-            .loginPage("/login").failureUrl("/login?error").permitAll()
-            .and()
-            .logout().logoutUrl("/logout").deleteCookies("remember-me").logoutSuccessUrl("/").permitAll()
-            .and()
-            .rememberMe();
-  }
-
   @Override
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
     auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
