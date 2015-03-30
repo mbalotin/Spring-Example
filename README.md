@@ -1,9 +1,9 @@
 Spring Example 1.0
 ======
 
-This is an skeleton project using spring. 
+This is a skeleton project using spring. 
 
-The main ideia behind this is to have a working java spring
+The main idea behind this is to have a working java spring
 web and/or rest application up and running as quick as possible,
 seeing as creating a new java project is usually a very time consuming process.
 
