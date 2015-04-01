@@ -34,6 +34,7 @@ public class UserController {
   @Value("classpath:/examples/userExample.json")
   private Resource userExample;
 
+  @RequestMapping(value = "")
   public String getUserExample() throws IOException {
     return IOUtils.toString(userExample.getInputStream());
   }

@@ -11,10 +11,11 @@
   <version>1.0</version>
   <packaging>jar</packaging>
 
+  <!-- Inherit defaults from Spring Boot -->
   <parent>
     <groupId>io.spring.platform</groupId>
     <artifactId>platform-bom</artifactId>
-    <version>1.1.1.RELEASE</version>
+    <version>2.0.0.BUILD-SNAPSHOT</version>
     <relativePath />
   </parent>
 
@@ -24,6 +25,9 @@
     <!-- This is used by spring boot to set java version and Main class (for jar).-->
     <java.version>1.8</java.version>
     <start-class>com.Application</start-class>
+    <!-- Manually updating Spring Security because parent POM still hasn't and I want the latest version as it has some good bug fixes.-->
+    <!-- https://jira.spring.io/browse/SEC-2758-->
+    <spring-security.version>4.0.0.RELEASE</spring-security.version>
   </properties>
 
   <dependencies>
@@ -74,7 +78,6 @@
       <artifactId>spring-boot-starter-security</artifactId>
     </dependency>
 
-
     <!-- Log4j dependencies -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -92,7 +95,8 @@
     </dependency>
     <dependency>
       <groupId>org.thymeleaf.extras</groupId>
-      <artifactId>thymeleaf-extras-springsecurity3</artifactId>
+      <artifactId>thymeleaf-extras-springsecurity4</artifactId>
+      <version>2.1.2.RELEASE</version>
     </dependency>
 
     <!-- Mail dependencies -->
@@ -102,6 +106,7 @@
     </dependency>
 
     <!-- WebJars dependencies -->
+    <!-- Want AngularJS? https://github.com/dsyer/spring-security-angular-->
     <dependency>
       <groupId>org.webjars</groupId>
       <artifactId>bootstrap</artifactId>
@@ -133,11 +138,6 @@
       <groupId>net.sf.ehcache</groupId>
       <artifactId>ehcache</artifactId>
     </dependency>
-    <dependency>
-      <groupId>net.sf.ehcache</groupId>
-      <artifactId>ehcache-jcache</artifactId>
-      <version>1.5.0-0.5</version>
-    </dependency>
 
     <!-- Markdown to Html dependencies -->
     <dependency>
@@ -168,10 +168,13 @@
 
     <!-- Add Resources -->
     <resources>
+      <!-- Basic Resources-->
       <resource>
         <directory>${basedir}/src/main/resources</directory>
         <filtering>false</filtering>
       </resource>
+
+      <!-- WebApp Resources-->
       <resource>
         <directory>${basedir}/src/main/webapp</directory>
         <filtering>false</filtering>
@@ -181,6 +184,35 @@
           <exclude>**/*.scss</exclude>
         </excludes>
       </resource>
+
+      <!-- Keystore.jks and external application.properties Resources -->
+      <resource>
+        <directory>${basedir}</directory>
+        <targetPath>${project.build.directory}</targetPath>
+        <filtering>false</filtering>
+        <includes>
+          <include>keystore.jks</include>
+          <include>application.properties</include>
+        </includes>
+      </resource>
+
+      <!-- Markdown Resources -->
+      <resource>
+        <directory>${basedir}</directory>
+        <targetPath>${project.build.outputDirectory}/markdown/</targetPath>
+        <filtering>false</filtering>
+        <includes>
+          <include>README.md</include>
+        </includes>
+      </resource>
+
+      <!-- Docker Resources -->
+      <!-- http://getprismatic.com/story/1416871126618?share=MzQxMTI.MTQxNjg3MTEyNjYxOA.LgQyeU8WnqGYihnaoiM-UNfuQD0 -->
+      <resource>
+        <directory>${basedir}/.docker/</directory>
+        <targetPath>${project.build.directory}/.docker/</targetPath>
+      </resource>
+
     </resources>
 
     <plugins>
@@ -322,30 +354,9 @@
         </executions>
       </plugin>
 
-      <!-- Copy keystore.jks and README.md to target -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-antrun-plugin</artifactId>
-        <version>1.7</version>
-        <executions>
-          <execution>
-            <phase>compile</phase>
-            <goals>
-              <goal>run</goal>
-            </goals>
-            <configuration>
-              <target>
-                <copy file="README.md" tofile="${project.build.outputDirectory}/markdown/README.md"/>
-                <copy file="keystore.jks" tofile="${project.build.directory}/keystore.jks"/>
-                <copy file="application.properties" tofile="${project.build.directory}/application.properties"/>
-              </target>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-
     </plugins>
   </build>
+
 
   <repositories>
 
@@ -357,5 +368,33 @@
       <url>file://${basedir}/repo</url>
     </repository>-->
 
+    <!-- Add Spring repositories -->
+    <!-- (you don't need this if you are using a .RELEASE version) -->
+    <repository>
+      <id>spring-snapshots</id>
+      <url>http://repo.spring.io/snapshot</url>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+    <repository>
+      <id>spring-milestones</id>
+      <url>http://repo.spring.io/milestone</url>
+    </repository>
+
   </repositories>
+
+  <pluginRepositories>
+
+    <pluginRepository>
+      <id>spring-snapshots</id>
+      <url>http://repo.spring.io/snapshot</url>
+    </pluginRepository>
+    <pluginRepository>
+      <id>spring-milestones</id>
+      <url>http://repo.spring.io/milestone</url>
+    </pluginRepository>
+
+  </pluginRepositories>
+
 </project>

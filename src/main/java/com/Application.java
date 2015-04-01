@@ -7,13 +7,15 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.aspectj.EnableSpringConfigured;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 // Spring boot example: https://spring.io/guides/gs/spring-boot/
 @EnableCaching
 @EnableScheduling
 @EnableSpringConfigured
+@EnableTransactionManagement
 @EnableConfigurationProperties
-@EnableGlobalMethodSecurity(securedEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 @SpringBootApplication
 public class Application {
 

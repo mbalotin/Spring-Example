@@ -4,26 +4,26 @@ import com.annotations.Production;
 import java.util.concurrent.TimeUnit;
 import org.apache.catalina.Context;
 import org.apache.catalina.connector.Connector;
-import org.apache.catalina.deploy.SecurityCollection;
-import org.apache.catalina.deploy.SecurityConstraint;
+import org.apache.tomcat.util.descriptor.web.SecurityCollection;
+import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
 import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /*
- * If you want to use Embedded Jetty, delete this class.
- * I have not found a way to do Http to Https forward in Jetty.
- * Any help is appreciated.
+ If you want to use Embedded Jetty, delete this class.
+ I have not found a way to do Http to Https forward in Jetty.
+ Any help is appreciated.
  */
 @Configuration
 @Production
 public class TomcatServletConfig {
 
   /**
-   * Forward Http to Https. Other SecurityConstraints can be added to fine grain the http forward.
-   *
-   * @return EmbeddedServletContainerFactory
+   Forward Http to Https. Other SecurityConstraints can be added to fine grain the http forward.
+
+   @return EmbeddedServletContainerFactory
    */
   @Bean
   public EmbeddedServletContainerFactory tomcatEmbeddedServletContainerFactory() {

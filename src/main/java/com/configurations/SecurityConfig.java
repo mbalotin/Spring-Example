@@ -66,7 +66,7 @@ public class SecurityConfig extends WebMvcConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
       http.csrf().disable()
               .antMatcher("/api/**").authorizeRequests()
-              .antMatchers("/api/admin/**").hasAnyRole("ADMIN")
+              .antMatchers("/api/admin/**").hasRole("ADMIN")
               .anyRequest().authenticated()
               .and()
               .httpBasic();
@@ -85,7 +85,7 @@ public class SecurityConfig extends WebMvcConfigurerAdapter {
       http.csrf().disable()
               .authorizeRequests()
               .antMatchers("/").permitAll()
-              .antMatchers("admin/**").hasAnyRole("ADMIN")
+              .antMatchers("admin/**").hasRole("ADMIN")
               .anyRequest().fullyAuthenticated()
               .and()
               .formLogin()

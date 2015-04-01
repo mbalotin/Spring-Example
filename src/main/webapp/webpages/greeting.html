@@ -5,14 +5,17 @@
   <div layout:fragment="content">
 
     <p th:text="#{greeting(${name})}" />
-    <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+    <p th:text="${#httpServletRequest.remoteUser}" />
+
     <form th:action="@{logout}" method="post">
       <input type="submit" value="Sign Out"/>
     </form>
-    <div sec:authorize="hasRole('ROLE_ADMIN')">
+
+    <!--TODO : NOT WORKING??? --->
+    <div sec:authorize="hasRole('ADMIN')">
       This content is only shown to administrators.
     </div>
-    <div sec:authorize="hasRole('ROLE_USER')">
+    <div sec:authorize="hasRole('USER')">
       This content is only shown to users.
     </div>
 

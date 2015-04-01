@@ -12,6 +12,9 @@ import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 @Configuration
 public class ThymeleafConfig {
 
+  /*
+   TODO: How can I make this transparent for war and jar?
+   */
   @Bean
   public ClassLoaderTemplateResolver webpagesResolver() {
     ClassLoaderTemplateResolver webpagesResolver = new ClassLoaderTemplateResolver();

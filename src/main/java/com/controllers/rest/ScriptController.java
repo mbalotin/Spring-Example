@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.core.io.Resource;
-import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,12 +36,12 @@ public class ScriptController {
   @Autowired
   private ScriptRepository scriptRepository;
 
-  @RequestMapping(value = "example")
+  @RequestMapping(value = "")
   public String getScriptExample() throws IOException {
     return IOUtils.toString(scriptExample.getInputStream());
   }
 
-  @Secured("ROLE_ADMIN")
+  @PreAuthorize("hasRole('ADMIN')")
   @RequestMapping(value = "new", method = RequestMethod.POST)
   public Script postNewScript(@RequestBody Script script) {
     AuthUser owner = authentication.getAuthenticatedUser();

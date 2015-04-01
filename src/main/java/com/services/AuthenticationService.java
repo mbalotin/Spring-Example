@@ -82,10 +82,6 @@ public class AuthenticationService implements UserDetailsService {
     return roles;
   }
 
-  public Role getRoleByName(String rolename) {
-    return Optional.ofNullable(roleRepository.findByRolename(rolename.trim())).orElse(new Role(rolename.trim()));
-  }
-
   @Override
   public UserDetails loadUserByUsername(String username) {
     AuthUser domainUser = getAuthenticatedUserByName(username);
@@ -108,8 +104,25 @@ public class AuthenticationService implements UserDetailsService {
 
   private List<GrantedAuthority> getAuthorities(Collection<Role> roles) {
     final List<GrantedAuthority> authList = new ArrayList<>();
-    roles.forEach((role) -> authList.add(new SimpleGrantedAuthority(role.getRolename())));
+    roles.forEach((role) -> authList.add(new SimpleGrantedAuthority(standardizeRoleName(role.getRolename()))));
     return authList;
+  }
+
+  private Role getRoleByName(String rolename) {
+    String finalName = standardizeRoleName(rolename);
+    return Optional.ofNullable(roleRepository.findByRolename(finalName)).orElse(new Role(finalName));
+  }
+
+  /*
+   The prefix ROLES_ is, unfortunately, required by Spring Security.
+   This method makes it somewhat transparent to the rest of the code.
+   */
+  private String standardizeRoleName(String rolename) {
+    String finalName = rolename.trim().toUpperCase();
+    if (!rolename.startsWith("ROLE_")) {
+      finalName = "ROLE_" + finalName;
+    }
+    return finalName;
   }
 
 }
