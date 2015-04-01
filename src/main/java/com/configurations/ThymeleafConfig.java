@@ -5,9 +5,9 @@ import org.springframework.context.annotation.Configuration;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 /**
- * This class configures Thymeleaf to find the templates in the correct classpath folders.
- * We don't need a configuration for the classpath:templates/ folder as this is the default one.
- * We also don't need to configure /resources as they are placed in a spring public folder.
+ This class configures Thymeleaf to find the templates in the correct classpath folders.
+ We don't need a configuration for the classpath:templates/ folder as this is the default one.
+ We also don't need to configure /resources as they are placed in a spring public folder.
  */
 @Configuration
 public class ThymeleafConfig {

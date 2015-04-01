@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.core.io.Resource;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Transactional(propagation = Propagation.REQUIRED)
-@RequestMapping("scripts")
+@RequestMapping("api/scripts")
 @CacheConfig(cacheNames = "scripts")
 public class ScriptController {
 
@@ -40,6 +41,7 @@ public class ScriptController {
     return IOUtils.toString(scriptExample.getInputStream());
   }
 
+  @Secured("ROLE_ADMIN")
   @RequestMapping(value = "new", method = RequestMethod.POST)
   public Script postNewScript(@RequestBody Script script) {
     AuthUser owner = authentication.getAuthenticatedUser();

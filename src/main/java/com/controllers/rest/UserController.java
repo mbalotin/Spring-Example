@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.io.Resource;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Transactional(propagation = Propagation.REQUIRED)
-@RequestMapping("users")
+@RequestMapping("api/admin/users")
 @CacheConfig(cacheNames = "users")
 public class UserController {
 
@@ -35,18 +34,15 @@ public class UserController {
   @Value("classpath:/examples/userExample.json")
   private Resource userExample;
 
-  @Secured("ROLE_ADMIN")
   public String getUserExample() throws IOException {
     return IOUtils.toString(userExample.getInputStream());
   }
 
-  @Secured("ROLE_ADMIN")
   @RequestMapping(value = "list")
   public Collection<AuthUser> getAllUserData() {
     return userRepository.findAll();
   }
 
-  @Secured("ROLE_ADMIN")
   @RequestMapping(value = "new", method = RequestMethod.POST)
   public AuthUser postNewUser(@RequestBody AuthUser user) {
 

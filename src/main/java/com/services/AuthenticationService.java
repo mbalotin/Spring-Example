@@ -54,7 +54,11 @@ public class AuthenticationService implements UserDetailsService {
     String encryptedPassword = AuthUser.encryptPassword(adminPassword);
     AuthUser admin = Optional.ofNullable(userRepository.findByUsername(adminUsername)).orElse(new AuthUser());
 
+    //Add admin roles
     adminRoles.forEach((role) -> admin.addRole(getRoleByName(role)));
+
+    //Add user roles
+    userRoles.forEach((role) -> admin.addRole(getRoleByName(role)));
 
     admin.setUsername(adminUsername);
     admin.setPassword(encryptedPassword);

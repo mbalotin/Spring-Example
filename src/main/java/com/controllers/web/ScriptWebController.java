@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("scripts")
+@RequestMapping("admin/scripts")
 public class ScriptWebController {
 
   @Autowired
@@ -23,7 +23,7 @@ public class ScriptWebController {
 
   @RequestMapping()
   public ModelAndView getScriptList() throws IOException {
-    return new ModelAndView("scripts", "scripts", getAllScripts());
+    return new ModelAndView("admin/scripts", "scripts", getAllScripts());
   }
 
   public Collection<Script> getAllScripts() {

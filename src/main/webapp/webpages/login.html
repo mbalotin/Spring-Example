@@ -20,7 +20,8 @@
       <button type="submit">Sign in</button>
     </form>
 
-    <p th:if="${error != null}">The email or password you have entered is invalid, try again.</p>
+    <p th:if="${param.logout}" class="alert">You have been logged out</p>
+    <p th:if="${param.error}" class="alert alert-error">Invalid username and password, please try again</p>
 
   </div>
 

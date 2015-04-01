@@ -3,6 +3,7 @@
 
   <!-- /* Content of this page will be decorated by the elements of default.html */ -->
   <div layout:fragment="content">
+
     <p th:text="#{greeting(${name})}" />
     <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
     <form th:action="@{logout}" method="post">
@@ -14,6 +15,7 @@
     <div sec:authorize="hasRole('ROLE_USER')">
       This content is only shown to users.
     </div>
+
   </div>
 
 </html>
