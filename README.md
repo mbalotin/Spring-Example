@@ -49,9 +49,8 @@ So far, the project includes:
 Even if this is a web application, you can run it using .JAR in and embedded Tomcat. All you have to do is:
 
  - 1) Change packaging in pom.xml to jar 
-```
-    <packaging>jar</packaging>
-```
+      ```<packaging>jar</packaging>
+      ```
  - 2)  Remove this dependecy in pom.xml
 
         <dependency>
@@ -61,10 +60,11 @@ Even if this is a web application, you can run it using .JAR in and embedded Tom
         </dependency>
 
 - 3) Remove this line:
-        <exclude>webpages/</exclude>
+        ``` <exclude>webpages/</exclude>
+         ```
 
     from this resource in pom.xml:
-
+ ``` 
       <!-- WebApp Resources-->
       <resource>
         <directory>${basedir}/src/main/webapp</directory>
@@ -77,7 +77,7 @@ Even if this is a web application, you can run it using .JAR in and embedded Tom
           <exclude>**/*.scss</exclude>
         </excludes>
       </resource>
-      
+``` 
 - 4) Add this configuration to ThymeleafConfig.java
 
     ```java
@@ -107,7 +107,7 @@ Even if this is a web application, you can run it using .JAR in and embedded Tom
     ```
 
 - 6) Delete this plugin in pom.xml
-
+ ``` 
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
@@ -115,7 +115,7 @@ Even if this is a web application, you can run it using .JAR in and embedded Tom
           <packagingExcludes>mails/,resources/,templates/</packagingExcludes>
         </configuration>
       </plugin>
-      
+ ``` 
 There is one drawback of using .JAR: since we are using classpath to serve our templates to Thymleaf, we lose the ability to change the .html files during runtime for testing purposes. We need to deploy the files again.
 
 ####RUN AS JAR WITHOUT WEBPAGES:
@@ -133,22 +133,25 @@ If you don't need a WEB Application, JAR packaging is prefered. In that case:
      -   Compiler for SCSS
      -   Minifier for CSS
     - Also, remove these two lines: 
+    ``` 
           <exclude>**/*.coffee</exclude>
           <exclude>**/*.scss</exclude>
+    ``` 
     from
-    ```
-        <resource>
-            <directory>${basedir}/src/main/webapp</directory>
-            <filtering>false</filtering>
-            <excludes>
-              <!-- Remove this exclude to package as .JAR -->
-              <exclude>webpages/</exclude>
-              <!-- These file are excluded because they are compiled and minified by other plugins -->
-              <exclude>**/*.coffee</exclude>
-              <exclude>**/*.scss</exclude>
-            </excludes>
-        </resource>
-        ```
+ ``` 
+	<resource>
+	   <directory>${basedir}/src/main/webapp</directory>
+	   <filtering>false</filtering>
+	   <excludes>
+	     <!-- Remove this exclude to package as .JAR -->
+	     <exclude>webpages/</exclude>
+	     <!-- These file are excluded because they are compiled and minified by other plugins -->
+	     <exclude>**/*.coffee</exclude>
+	     <exclude>**/*.scss</exclude>
+	   </excludes>
+	</resource>
+ ``` 
+
 - 5) If you want absolutely nothing to do with HTML and WEB pages follow the steps above, delete the webapp/ folder, remove all Thymeleaf AND WebJar dependencies and remove this resource from pom.xml:
    
         <resource>
