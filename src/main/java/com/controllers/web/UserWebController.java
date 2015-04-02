@@ -1,7 +1,7 @@
 package com.controllers.web;
 
-import com.services.AuthenticationService;
 import com.models.AuthUser;
+import com.services.AuthenticationService;
 import com.services.MailerService;
 import java.util.Date;
 import javax.mail.MessagingException;

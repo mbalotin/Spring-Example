@@ -41,13 +41,134 @@ So far, the project includes:
 - Your Github markdown README.md file is automatically transformed into a webpage.
 - External application.properties file to override any properties you want during runtime.
 - Maven local repository example in pom.xml. (Example: https://devcenter.heroku.com/articles/local-maven-dependencies).
-- Works out of the box as both JAR and WAR (http://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#build-tool-plugins-maven-packaging). 
+- Works out of the box as both JAR and WAR (see below) (http://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#build-tool-plugins-maven-packaging). 
 - JAR running on embedded Tomcat. Can be easily switched to Jetty (http://docs.spring.io/spring-boot/docs/current/reference/html/howto-embedded-servlet-containers.html#howto-use-jetty-instead-of-tomcat).
 - More examples and explanations are in code comments.
 
-####WARNING:
-There is one drawback of this project. Since we are using classpath to serve our templates to Thymleaf, we lose the ability to change the .html files during runtime for testing purposes. We need to deploy the files again.
+####RUN AS JAR:
+Even if this is a web application, you can run it using .JAR in and embedded Tomcat. All you have to do is:
+
+ - 1) Change packaging in pom.xml to jar 
+```
+    <packaging>jar</packaging>
+```
+ - 2)  Remove this dependecy in pom.xml
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+- 3) Remove this line:
+        <exclude>webpages/</exclude>
+
+    from this resource in pom.xml:
+
+      <!-- WebApp Resources-->
+      <resource>
+        <directory>${basedir}/src/main/webapp</directory>
+        <filtering>false</filtering>
+        <excludes>
+          <!-- Remove this exclude to package as .JAR -->
+          <exclude>webpages/</exclude>  <---------
+          <!-- These file are excluded because they are compiled and minified by other plugins -->
+          <exclude>**/*.coffee</exclude>
+          <exclude>**/*.scss</exclude>
+        </excludes>
+      </resource>
+      
+- 4) Add this configuration to ThymeleafConfig.java
+
+    ```java
+      @Bean
+      public ClassLoaderTemplateResolver webpagesClassLoaderResolver() {
+        ClassLoaderTemplateResolver webpagesResolver = new ClassLoaderTemplateResolver();
+        webpagesResolver.setTemplateMode("HTML5");
+        webpagesResolver.setPrefix("webpages/");
+        webpagesResolver.setSuffix(".html");
+    
+        return webpagesResolver;
+      }
+    ```
+
+- 5) Remove this configuration from ThymeleafConfig.java
+
+    ```java
+    @Bean
+    public ServletContextTemplateResolver webpagesServletContextResolver() {
+    ServletContextTemplateResolver webpagesResolver = new ServletContextTemplateResolver();
+    webpagesResolver.setTemplateMode("HTML5");
+    webpagesResolver.setPrefix("/webpages/");
+    webpagesResolver.setSuffix(".html");
+    
+    return webpagesResolver;
+    }
+    ```
+
+- 6) Delete this plugin in pom.xml
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <configuration>
+          <packagingExcludes>mails/,resources/,templates/</packagingExcludes>
+        </configuration>
+      </plugin>
+      
+There is one drawback of using .JAR: since we are using classpath to serve our templates to Thymleaf, we lose the ability to change the .html files during runtime for testing purposes. We need to deploy the files again.
+
+####RUN AS JAR WITHOUT WEBPAGES:
+If you don't need a WEB Application, JAR packaging is prefered. In that case:
+
+- 1) Follow the steps above, BUT IGNORE STEP 4) 
+
+- 2) Delete the folder webapp/webpages AND webapp/templates. You will then use thymeleaf only for e-mails 
+
+- 3) If you have no need for HTML emails, delete webapp/mails
+
+- 4) If you have no need for CSS, JS and IMAGES, delete webapp/resources.
+    - Also, remove these plugins in pom.xml:
+     -  Compiler and Minifier for Coffeescrip
+     -   Compiler for SCSS
+     -   Minifier for CSS
+    - Also, remove these two lines: 
+          <exclude>**/*.coffee</exclude>
+          <exclude>**/*.scss</exclude>
+    from
+    ```
+        <resource>
+            <directory>${basedir}/src/main/webapp</directory>
+            <filtering>false</filtering>
+            <excludes>
+              <!-- Remove this exclude to package as .JAR -->
+              <exclude>webpages/</exclude>
+              <!-- These file are excluded because they are compiled and minified by other plugins -->
+              <exclude>**/*.coffee</exclude>
+              <exclude>**/*.scss</exclude>
+            </excludes>
+        </resource>
+        ```
+- 5) If you want absolutely nothing to do with HTML and WEB pages follow the steps above, delete the webapp/ folder, remove all Thymeleaf AND WebJar dependencies and remove this resource from pom.xml:
+   
+        <resource>
+            <directory>${basedir}/src/main/webapp</directory>
+            <filtering>false</filtering>
+            <excludes>
+              <!-- Remove this exclude to package as .JAR -->
+              <exclude>webpages/</exclude>
+              <!-- These file are excluded because they are compiled and minified by other plugins -->
+              <exclude>**/*.coffee</exclude>
+              <exclude>**/*.scss</exclude>
+            </excludes>
+        </resource>
+
+###WARNING:
+Thymeleaf sec:authorize tags are not working with Spring Security 4 for now. Waiting for the release of Spring-Boot 1.3 that might fix it.
 
 ####WARNING 2:
 KEYSTORE IS INVALID. PLEASE CREATE ONE TO SUBSTITUTE.
+
+
+
 

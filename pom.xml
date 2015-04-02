@@ -9,7 +9,7 @@
   <name>Spring Example</name>
   <description>Spring Example for every project!</description>
   <version>1.0</version>
-  <packaging>jar</packaging>
+  <packaging>war</packaging>
 
   <!-- Inherit defaults from Spring Boot -->
   <parent>
@@ -34,11 +34,11 @@
 
     <!-- To build a war file that is both executable and deployable into an external container
     you need to mark the embedded container dependencies as “provided”, e.g:-->
-    <!--    <dependency>
+    <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-tomcat</artifactId>
       <scope>provided</scope>
-    </dependency>-->
+    </dependency>
 
     <!-- Spring Boot Starter Core dependencies -->
     <dependency>
@@ -171,7 +171,7 @@
       <!-- Basic Resources-->
       <resource>
         <directory>${basedir}/src/main/resources</directory>
-        <filtering>false</filtering>
+        <filtering>true</filtering>
       </resource>
 
       <!-- WebApp Resources-->
@@ -179,6 +179,8 @@
         <directory>${basedir}/src/main/webapp</directory>
         <filtering>false</filtering>
         <excludes>
+          <!-- Remove this exclude to package as .JAR -->
+          <exclude>webpages/</exclude>
           <!-- These file are excluded because they are compiled and minified by other plugins -->
           <exclude>**/*.coffee</exclude>
           <exclude>**/*.scss</exclude>

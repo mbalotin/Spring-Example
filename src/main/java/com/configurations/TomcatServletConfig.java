@@ -21,9 +21,9 @@ import org.springframework.context.annotation.Configuration;
 public class TomcatServletConfig {
 
   /**
-   Forward Http to Https. Other SecurityConstraints can be added to fine grain the http forward.
-
-   @return EmbeddedServletContainerFactory
+   * Forward Http to Https. Other SecurityConstraints can be added to fine grain the http forward.
+   *
+   * @return EmbeddedServletContainerFactory
    */
   @Bean
   public EmbeddedServletContainerFactory tomcatEmbeddedServletContainerFactory() {

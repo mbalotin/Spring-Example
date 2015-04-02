@@ -1,5 +1,6 @@
 package com.controllers.rest;
 
+import com.annotations.AdminOnly;
 import com.daos.ScriptRepository;
 import com.models.AuthUser;
 import com.models.Script;
@@ -11,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.core.io.Resource;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,7 +41,7 @@ public class ScriptController {
     return IOUtils.toString(scriptExample.getInputStream());
   }
 
-  @PreAuthorize("hasRole('ADMIN')")
+  @AdminOnly
   @RequestMapping(value = "new", method = RequestMethod.POST)
   public Script postNewScript(@RequestBody Script script) {
     AuthUser owner = authentication.getAuthenticatedUser();
