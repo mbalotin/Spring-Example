@@ -90,10 +90,6 @@
       <artifactId>spring-boot-starter-thymeleaf</artifactId>
     </dependency>
     <dependency>
-      <groupId>nz.net.ultraq.thymeleaf</groupId>
-      <artifactId>thymeleaf-layout-dialect</artifactId>
-    </dependency>
-    <dependency>
       <groupId>org.thymeleaf.extras</groupId>
       <artifactId>thymeleaf-extras-springsecurity4</artifactId>
       <version>2.1.2.RELEASE</version>
@@ -240,10 +236,11 @@
         <artifactId>coffee-maven-plugin</artifactId>
         <version>1.4.13</version>
         <configuration>
+          <coffeeOutputDirectory>${project.build.outputDirectory}/resources/js</coffeeOutputDirectory>
+          <compileIndividualFiles>false</compileIndividualFiles>
           <coffeeJoinSets>
             <joinSet>
               <id>main</id> <!-- This is also the name of the resulting file -->
-              <coffeeOutputDirectory>${project.build.outputDirectory}/resources/js</coffeeOutputDirectory>
               <fileSet>
                 <directory>${basedir}/src/main/webapp/resources/js</directory>
                 <includes>
@@ -262,7 +259,7 @@
         </configuration>
         <executions>
           <execution>
-            <id>coffee</id>
+            <phase>process-resources</phase>
             <goals>
               <goal>coffee</goal>
               <goal>minify</goal>
@@ -278,7 +275,7 @@
         <version>1.1.1</version>
         <executions>
           <execution>
-            <phase>generate-resources</phase>
+            <phase>process-resources</phase>
             <goals>
               <goal>update-stylesheets</goal>
             </goals>
@@ -297,16 +294,19 @@
         <version>1.7.4</version>
         <executions>
           <execution>
+            <phase>process-resources</phase>
             <goals>
               <goal>minify</goal>
             </goals>
             <configuration>
               <webappSourceDir>${project.build.outputDirectory}/resources</webappSourceDir>
-              <cssSourceDir>css</cssSourceDir>
               <webappTargetDir>${project.build.outputDirectory}/resources</webappTargetDir>
+              <nosuffix>true</nosuffix>
+
+              <!-- CSS Minify Options -->
+              <cssSourceDir>css</cssSourceDir>
               <cssTargetDir>css</cssTargetDir>
               <cssFinalFile>main.min.css</cssFinalFile>
-              <nosuffix>true</nosuffix>
               <cssSourceIncludes>
                 <include>*.css</include>
               </cssSourceIncludes>

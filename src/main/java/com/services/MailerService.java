@@ -45,7 +45,7 @@ public class MailerService {
     mailSender.send(email);
   }
 
-  public MimeMessageHelper buildMessage(MimeMessage mimeMessage, String recipient, String subject, String content) throws MessagingException {
+  private MimeMessageHelper buildMessage(MimeMessage mimeMessage, String recipient, String subject, String content) throws MessagingException {
     // Prepare message using a Spring helper
     MimeMessageHelper email = new MimeMessageHelper(mimeMessage, true, "UTF-8");
     email.setFrom(sender);

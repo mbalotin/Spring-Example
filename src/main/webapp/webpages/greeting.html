@@ -12,10 +12,10 @@
     </form>
 
     <!-- TODO : NOT WORKING??? -->
-    <div sec:authorize="hasRole('ADMIN')">
+    <div sec:authorize="hasAnyRole('ADMIN')">
       This content is only shown to administrators.
     </div>
-    <div sec:authorize="hasRole('USER')">
+    <div sec:authorize="hasAnyRole('USER')">
       This content is only shown to users.
     </div>
 
