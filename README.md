@@ -131,7 +131,7 @@ If you don't need a WEB Application, JAR packaging is prefered. In that case:
  - Delete the webapp folder entirely
  - Remove all Thymeleaf AND WebJar dependencies from pom.xml
  - Remove ThymeleafConfig.java
- - Remove Security configuration for web content in SecurityConfig.java and change the security configurations to your liking
+ - Remove "Security configuration for web content" in SecurityConfig.java and change the security configurations to your liking
  - Delete Web Controllers' folder
  - Remove this resource from pom.xml:
 
