@@ -129,12 +129,12 @@ If you don't need a WEB Application, JAR packaging is prefered. In that case:
 
 - 4) If you want absolutely nothing to do with HTML and WEB pages follow the steps above AND:
  - Delete the webapp folder entirely
- - Remove all Thymeleaf AND WebJar dependencies from pom.xml
  - Remove ThymeleafConfig.java
  - Remove "Security configuration for web content" in SecurityConfig.java and change the security configurations to your liking
  - Delete Web Controllers' folder
- - Remove the compiler and minifier plugins from pom.xml (both CoffeScript and SCSS)
  - Remove thymeleaf configurations from application.properties
+ - Remove all Thymeleaf AND WebJar dependencies from pom.xml 
+ - Remove the compiler and minifier plugins from pom.xml (both CoffeScript and SCSS)
  - Remove this resource from pom.xml:
  ``` 
         <resource>
