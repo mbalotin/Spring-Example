@@ -134,7 +134,7 @@ If you don't need a WEB Application, JAR packaging is prefered. In that case:
  - Remove "Security configuration for web content" in SecurityConfig.java and change the security configurations to your liking
  - Delete Web Controllers' folder
  - Remove this resource from pom.xml:
-
+ ``` 
         <resource>
             <directory>${basedir}/src/main/webapp</directory>
             <filtering>false</filtering>
@@ -146,7 +146,8 @@ If you don't need a WEB Application, JAR packaging is prefered. In that case:
               <exclude>**/*.scss</exclude>
             </excludes>
         </resource>
-
+ ``` 
+ 
 ###WARNING:
 Thymeleaf sec:authorize tags are not working with Spring Security 4 for now. Waiting for the release of Spring-Boot 1.3 that might fix it.
 
