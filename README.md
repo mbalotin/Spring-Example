@@ -95,15 +95,15 @@ Even if this is a web application, you can run it using .JAR in and embedded Tom
 - 5) Remove this configuration from ThymeleafConfig.java
 
     ```java
-    @Bean
-    public ServletContextTemplateResolver webpagesServletContextResolver() {
-      ServletContextTemplateResolver webpagesResolver = new ServletContextTemplateResolver();
-      webpagesResolver.setTemplateMode("HTML5");
-      webpagesResolver.setPrefix("/webpages/");
-      webpagesResolver.setSuffix(".html");
+      @Bean
+      public ServletContextTemplateResolver webpagesServletContextResolver() {
+        ServletContextTemplateResolver webpagesResolver = new ServletContextTemplateResolver();
+        webpagesResolver.setTemplateMode("HTML5");
+        webpagesResolver.setPrefix("/webpages/");
+        webpagesResolver.setSuffix(".html");
     
-      return webpagesResolver;
-    }
+        return webpagesResolver;
+      }
     ```
 
 - 6) Delete this plugin in pom.xml
