@@ -133,6 +133,7 @@ If you don't need a WEB Application, JAR packaging is prefered. In that case:
  - Remove ThymeleafConfig.java
  - Remove "Security configuration for web content" in SecurityConfig.java and change the security configurations to your liking
  - Delete Web Controllers' folder
+ - Remove the compiler and minifier plugins from pom.xml (both CoffeScript and SCSS)
  - Remove this resource from pom.xml:
  ``` 
         <resource>
