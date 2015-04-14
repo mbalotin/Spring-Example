@@ -97,12 +97,12 @@ Even if this is a web application, you can run it using .JAR in and embedded Tom
     ```java
     @Bean
     public ServletContextTemplateResolver webpagesServletContextResolver() {
-    ServletContextTemplateResolver webpagesResolver = new ServletContextTemplateResolver();
-    webpagesResolver.setTemplateMode("HTML5");
-    webpagesResolver.setPrefix("/webpages/");
-    webpagesResolver.setSuffix(".html");
+      ServletContextTemplateResolver webpagesResolver = new ServletContextTemplateResolver();
+      webpagesResolver.setTemplateMode("HTML5");
+      webpagesResolver.setPrefix("/webpages/");
+      webpagesResolver.setSuffix(".html");
     
-    return webpagesResolver;
+      return webpagesResolver;
     }
     ```
 
