@@ -127,33 +127,14 @@ If you don't need a WEB Application, JAR packaging is prefered. In that case:
 
 - 3) If you have no need for HTML emails, delete webapp/mails
 
-- 4) If you have no need for CSS, JS and IMAGES, delete webapp/resources.
-    - Also, remove these plugins in pom.xml:
-     -  Compiler and Minifier for Coffeescrip
-     -   Compiler for SCSS
-     -   Minifier for CSS
-    - Also, remove these two lines: 
-    ``` 
-          <exclude>**/*.coffee</exclude>
-          <exclude>**/*.scss</exclude>
-    ``` 
-    from
- ``` 
-	<resource>
-	   <directory>${basedir}/src/main/webapp</directory>
-	   <filtering>false</filtering>
-	   <excludes>
-	     <!-- Remove this exclude to package as .JAR -->
-	     <exclude>webpages/</exclude>
-	     <!-- These file are excluded because they are compiled and minified by other plugins -->
-	     <exclude>**/*.coffee</exclude>
-	     <exclude>**/*.scss</exclude>
-	   </excludes>
-	</resource>
- ``` 
+- 4) If you want absolutely nothing to do with HTML and WEB pages follow the steps above AND:
+ - Delete the webapp folder entirely
+ - Remove all Thymeleaf AND WebJar dependencies from pom.xml
+ - Remove ThymeleafConfig.java
+ - Remove Security configuration for web content in SecurityConfig.java and change the security configurations to your liking
+ - Delete Web Controllers' folder
+ - Remove this resource from pom.xml:
 
-- 5) If you want absolutely nothing to do with HTML and WEB pages follow the steps above, delete the webapp/ folder, remove all Thymeleaf AND WebJar dependencies and remove this resource from pom.xml:
-   
         <resource>
             <directory>${basedir}/src/main/webapp</directory>
             <filtering>false</filtering>
