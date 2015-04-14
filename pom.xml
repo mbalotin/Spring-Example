@@ -204,13 +204,6 @@
         </includes>
       </resource>
 
-      <!-- Docker Resources -->
-      <!-- http://getprismatic.com/story/1416871126618?share=MzQxMTI.MTQxNjg3MTEyNjYxOA.LgQyeU8WnqGYihnaoiM-UNfuQD0 -->
-      <resource>
-        <directory>${basedir}/.docker/</directory>
-        <targetPath>${project.build.directory}/.docker/</targetPath>
-      </resource>
-
     </resources>
 
     <plugins>
