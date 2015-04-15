@@ -9,7 +9,7 @@
   <name>Spring Example</name>
   <description>Spring Example for every project!</description>
   <version>1.0</version>
-  <packaging>war</packaging>
+  <packaging>jar</packaging>
 
   <!-- Inherit defaults from Spring Boot -->
   <parent>
@@ -31,15 +31,6 @@
   </properties>
 
   <dependencies>
-
-    <!-- To build a war file that is both executable and deployable into an external container
-    you need to mark the embedded container dependencies as “provided”, e.g:-->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-tomcat</artifactId>
-      <scope>provided</scope>
-    </dependency>
-
     <!-- Spring Boot Starter Core dependencies -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -92,7 +83,6 @@
     <dependency>
       <groupId>org.thymeleaf.extras</groupId>
       <artifactId>thymeleaf-extras-springsecurity4</artifactId>
-      <version>2.1.2.RELEASE</version>
     </dependency>
 
     <!-- Mail dependencies -->
@@ -175,8 +165,6 @@
         <directory>${basedir}/src/main/webapp</directory>
         <filtering>false</filtering>
         <excludes>
-          <!-- Remove this exclude to package as .JAR -->
-          <exclude>webpages/</exclude>
           <!-- These file are excluded because they are compiled and minified by other plugins -->
           <exclude>**/*.coffee</exclude>
           <exclude>**/*.scss</exclude>
@@ -211,16 +199,6 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
-      </plugin>
-
-      <!-- Since we copy web files into classpath to make then available for spring and thymeleaf,
-      these exclusions avoid duplications of webapp content when packaging a war. -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-war-plugin</artifactId>
-        <configuration>
-          <packagingExcludes>mails/,resources/,templates/</packagingExcludes>
-        </configuration>
       </plugin>
 
       <!-- Compiler and Minifier for Coffeescript-->
