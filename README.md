@@ -48,7 +48,8 @@ So far, the project includes:
 **There is one drawback of using .JAR: since we are using classpath to serve our templates to Thymleaf, we lose the ability to change the .html files during runtime for testing purposes. We need to deploy the files again.**
 
 **TODO: Add docker support. https://spring.io/guides/gs/spring-boot-docker/ **
-**TODO: Add tests support. https://spring.io/guides/gs/spring-boot-docker/ **
+
+**TODO: Add tests support: **
 
  ```
      @RunWith(SpringJUnit4ClassRunner.class)
