@@ -48,6 +48,20 @@ So far, the project includes:
 **There is one drawback of using .JAR: since we are using classpath to serve our templates to Thymleaf, we lose the ability to change the .html files during runtime for testing purposes. We need to deploy the files again.**
 
 **TODO: Add docker support. https://spring.io/guides/gs/spring-boot-docker/ **
+**TODO: Add tests support. https://spring.io/guides/gs/spring-boot-docker/ **
+
+ ```
+     @RunWith(SpringJUnit4ClassRunner.class)
+     @SpringApplicationConfiguration(classes = Main.class)
+     @WebAppConfiguration
+     @IntegrationTest
+     public class ExampleTests {
+     
+      RestTemplate rest = new RestTemplate();
+      String request = "here lies json";
+      ResponseEntity<String> response = rest.postForEntity(fullUrl, request, String.class);
+      String return = response.getBody();
+ ```
 
 ####REMOVE WEB CONTENT:
 If you don't need a WEB Application:
