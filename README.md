@@ -49,20 +49,7 @@ So far, the project includes:
 
 **TODO: Add docker support. https://spring.io/guides/gs/spring-boot-docker/ **
 
-**TODO: Add tests support: **
-
- ```
-     @RunWith(SpringJUnit4ClassRunner.class)
-     @SpringApplicationConfiguration(classes = Main.class)
-     @WebAppConfiguration
-     @IntegrationTest
-     public class ExampleTests {
-     
-      RestTemplate rest = new RestTemplate();
-      String request = "here lies json";
-      ResponseEntity<String> response = rest.postForEntity(fullUrl, request, String.class);
-      String return = response.getBody();
- ```
+**TODO: Add tests support: http://www.jayway.com/2014/07/04/integration-testing-a-spring-boot-application/ **
 
 ####REMOVE WEB CONTENT:
 If you don't need a WEB Application:
