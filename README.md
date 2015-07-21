@@ -47,9 +47,9 @@ So far, the project includes:
 
 **There is one drawback of using .JAR: since we are using classpath to serve our templates to Thymleaf, we lose the ability to change the .html files during runtime for testing purposes. We need to deploy the files again.**
 
-**TODO: Add docker support. https://spring.io/guides/gs/spring-boot-docker/ **
+**TODO: test docker support. https://spring.io/guides/gs/spring-boot-docker/ **
 
-**TODO: Add tests support: http://www.jayway.com/2014/07/04/integration-testing-a-spring-boot-application/ **
+**TODO: Test tests support: http://www.jayway.com/2014/07/04/integration-testing-a-spring-boot-application/ **
 
 ####REMOVE WEB CONTENT:
 If you don't need a WEB Application:
