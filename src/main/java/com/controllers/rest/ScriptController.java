@@ -1,19 +1,21 @@
 package com.controllers.rest;
 
-import com.annotations.AdminOnly;
-import com.daos.ScriptRepository;
+import com.repositories.ScriptRepository;
 import com.models.AuthUser;
 import com.models.Script;
 import com.services.AuthenticationService;
 import java.io.IOException;
+import java.util.Collection;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.io.Resource;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -41,7 +43,18 @@ public class ScriptController {
     return IOUtils.toString(scriptExample.getInputStream());
   }
 
-  @AdminOnly
+  @Cacheable
+  @RequestMapping(value = "/list", method = RequestMethod.GET)
+  public Collection<Script> getScriptList() {
+    return scriptRepository.findAllByOwner(authentication.getAuthenticatedUser());
+  }
+
+  @Cacheable
+  @RequestMapping(value = "/{scriptName}", method = RequestMethod.GET)
+  public Script getScriptListQuery(@PathVariable("scriptName") String scriptName) {
+    return scriptRepository.findByNameAndOwner(scriptName, authentication.getAuthenticatedUser());
+  }
+
   @RequestMapping(value = "new", method = RequestMethod.POST)
   public Script postNewScript(@RequestBody Script script) {
     AuthUser owner = authentication.getAuthenticatedUser();

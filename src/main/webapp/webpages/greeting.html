@@ -11,12 +11,17 @@
       <input type="submit" value="Sign Out"/>
     </form>
 
-    <!-- TODO : NOT WORKING??? -->
-    <div sec:authorize="hasAnyRole('ADMIN')">
+    <!-- TODO : NOT WORKING???
+    http://stackoverflow.com/questions/30788105/spring-security-hasrole-not-working -->
+    <div sec:authorize="hasRole('ADMIN')">
       This content is only shown to administrators.
     </div>
-    <div sec:authorize="hasAnyRole('USER')">
+    <div sec:authorize="hasRole('USER')">
       This content is only shown to users.
+    </div>
+
+    <div th:if="${#strings.contains(#authentication.principal.authorities,'ADMIN')}" >
+      This content is only shown to administrators and is a terrible workaround.
     </div>
 
   </div>

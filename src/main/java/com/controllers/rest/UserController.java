@@ -1,6 +1,7 @@
 package com.controllers.rest;
 
-import com.daos.UserRepository;
+import com.annotations.AdminOnly;
+import com.repositories.UserRepository;
 import com.models.AuthUser;
 import com.services.AuthenticationService;
 import java.io.IOException;
@@ -11,7 +12,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.io.Resource;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,11 +39,21 @@ public class UserController {
     return IOUtils.toString(userExample.getInputStream());
   }
 
+  @AdminOnly
+  @Cacheable
   @RequestMapping(value = "list")
   public Collection<AuthUser> getAllUserData() {
     return userRepository.findAll();
   }
 
+  @AdminOnly
+  @Cacheable
+  @RequestMapping(value = "/{userName}", method = RequestMethod.GET)
+  public AuthUser getUserByName(String username) {
+    return userRepository.findByUsername(username);
+  }
+
+  @AdminOnly
   @RequestMapping(value = "new", method = RequestMethod.POST)
   public AuthUser postNewUser(@RequestBody AuthUser user) {
 
@@ -58,11 +68,6 @@ public class UserController {
     userRepository.save(user);
 
     return user;
-  }
-
-  @Cacheable
-  public AuthUser getUserByName(String username) throws UsernameNotFoundException {
-    return userRepository.findByUsername(username);
   }
 
 }

@@ -1,6 +1,6 @@
 package com.controllers;
 
-import com.daos.UserRepository;
+import com.repositories.UserRepository;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;

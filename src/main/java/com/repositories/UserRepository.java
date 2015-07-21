@@ -1,4 +1,4 @@
-package com.daos;
+package com.repositories;
 
 import com.models.AuthUser;
 import java.util.Collection;

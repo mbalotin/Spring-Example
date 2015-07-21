@@ -1,6 +1,6 @@
 package com.controllers.web;
 
-import com.daos.ScriptRepository;
+import com.repositories.ScriptRepository;
 import com.models.AuthUser;
 import com.models.Script;
 import com.services.AuthenticationService;

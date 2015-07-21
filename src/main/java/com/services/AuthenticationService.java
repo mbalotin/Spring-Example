@@ -1,7 +1,7 @@
 package com.services;
 
-import com.daos.RoleRepository;
-import com.daos.UserRepository;
+import com.repositories.RoleRepository;
+import com.repositories.UserRepository;
 import com.models.AuthUser;
 import com.models.Role;
 import java.util.ArrayList;
