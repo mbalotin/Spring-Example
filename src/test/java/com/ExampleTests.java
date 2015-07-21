@@ -13,7 +13,6 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-// FULL EXAMPLES IN: https://github.com/IPGPTP/super_mu/tree/b0585b95b58bf865843dca186609d6c87d4062f5/src/test/java/com/hp/mu
 // Rest assured: http://www.jayway.com/2014/07/04/integration-testing-a-spring-boot-application/
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
