@@ -36,8 +36,10 @@ So far, the project includes:
 - WebJars support. Let Maven manage your third party JS dependencies. (http://www.webjars.org/).
 - Automatic admin creation during boostrap using @PostConstruct and with data from application.properties. (You may create a BootstrapController to add more boostrap actions using @PostConstruct)
 - Lombok support. And it works with AspectJ! (http://projectlombok.org/).
-- Caching with ehcache supported (by xml, as it's a lot cleaner than java code).
+- Caching with ehcache supported (via xml, as it's a lot cleaner than java code).
 - Logging with log4j (log to file in production and different properties for development and production environments).
+- Spring Test with Rest Assured support (http://www.jayway.com/2014/07/04/integration-testing-a-spring-boot-application/)
+- Docker support with automatic image creation via POM.xml (not tested in windows) (https://spring.io/guides/gs/spring-boot-docker/) 
 - Your Github markdown README.md file is automatically transformed into a webpage.
 - External application.properties file to override any properties you want during runtime.
 - Maven local repository example in pom.xml. (Example: https://devcenter.heroku.com/articles/local-maven-dependencies).
@@ -47,9 +49,6 @@ So far, the project includes:
 
 **There is one drawback of using .JAR: since we are using classpath to serve our templates to Thymleaf, we lose the ability to change the .html files during runtime for testing purposes. We need to deploy the files again.**
 
-**TODO: test docker support. https://spring.io/guides/gs/spring-boot-docker/ **
-
-**TODO: Test tests support: http://www.jayway.com/2014/07/04/integration-testing-a-spring-boot-application/ **
 
 ####REMOVE WEB CONTENT:
 If you don't need a WEB Application:
@@ -142,12 +141,5 @@ You can also run this application as a .WAR with an external Tomcat. All you hav
       </plugin>
  ```
 
-###WARNING:
-Thymeleaf sec:authorize tags are not working with Spring Security 4 for now. Waiting for the release of Spring-Boot 1.3 that might fix it.
-
-####WARNING 2:
+####WARNING:
 KEYSTORE IS INVALID. PLEASE CREATE ONE TO SUBSTITUTE.
-
-
-
-
