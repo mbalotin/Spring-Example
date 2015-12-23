@@ -143,7 +143,3 @@ You can also run this application as a .WAR with an external Tomcat. All you hav
 
 ####WARNING:
 KEYSTORE IS INVALID. PLEASE CREATE ONE TO SUBSTITUTE.
-
-
-
-
