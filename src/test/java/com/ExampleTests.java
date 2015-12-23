@@ -3,7 +3,7 @@ package com;
 import com.jayway.restassured.RestAssured;
 import static com.jayway.restassured.RestAssured.basic;
 import static com.jayway.restassured.RestAssured.given;
-import org.hamcrest.Matchers;
+import static org.hamcrest.CoreMatchers.containsString;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,11 +31,9 @@ public class ExampleTests {
   }
 
   @Test
-  public void ConcatenateTest() {
-    String request = "";
-    given().body(request)
-            .when().get("/scripts")
-            .then().body("name", Matchers.is("name"));
+  public void scriptNameTest() {
+    given().when().get("/api/scripts")
+            .then().body(containsString("name"));
 
   }
 }

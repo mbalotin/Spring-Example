@@ -332,7 +332,7 @@
       </plugin>
 
       <!-- Spring docker plugin https://spring.io/guides/gs/spring-boot-docker/ -->
-      <!-- docker run -p 8080:8080 -t super_mu -->
+      <!-- docker run -p 8080:8080 -t spring_example -->
       <plugin>
         <groupId>com.spotify</groupId>
         <artifactId>docker-maven-plugin</artifactId>
