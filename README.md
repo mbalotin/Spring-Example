@@ -84,7 +84,9 @@ You can also run this application as a .WAR with an external Tomcat. All you hav
  - 1) Follow this tutorial from spring boot: http://docs.spring.io/spring-boot/docs/current/reference/html/howto-traditional-deployment.html
 
 - 3) Add this line:
-        <exclude>webpages/</exclude>
+ ```
+      <exclude>webpages/</exclude>
+ ```
 
     To this resource in pom.xml:
  ```
