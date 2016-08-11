@@ -18,13 +18,13 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepository extends CrudRepository<AuthUser, Long> {
 
-  /* If not using spring data, we can use EntityManager like this:
+	/* If not using spring data, we can use EntityManager like this:
    @PersistenceContext
    private EntityManager entityManager;
-   */
-  AuthUser findByUsername(String username);
+	 */
+	AuthUser findByUsername(String username);
 
-  @Override
-  Collection<AuthUser> findAll();
+	@Override
+	Collection<AuthUser> findAll();
 
 }

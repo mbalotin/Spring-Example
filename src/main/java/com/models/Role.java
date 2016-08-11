@@ -21,20 +21,20 @@ import lombok.NoArgsConstructor;
 @Table(uniqueConstraints = @UniqueConstraint(name = "UniqueRoleNamelConstraint", columnNames = {"rolename"}))
 public class Role implements Serializable {
 
-  private static final long serialVersionUID = 1470729557539182377L;
+	private static final long serialVersionUID = 1470729557539182377L;
 
-  @Id
-  @JsonIgnore
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private long id;
+	@Id
+	@JsonIgnore
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
 
-  private String rolename;
+	private String rolename;
 
-  @ManyToMany(mappedBy = "roles")
-  private Collection<AuthUser> users;
+	@ManyToMany(mappedBy = "roles")
+	private Collection<AuthUser> users;
 
-  public Role(String role) {
-    rolename = role;
-  }
+	public Role(String role) {
+		rolename = role;
+	}
 
 }

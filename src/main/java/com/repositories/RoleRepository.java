@@ -17,10 +17,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RoleRepository extends CrudRepository<Role, Long> {
 
-  /* If not using spring data, we can use EntityManager like this:
+	/* If not using spring data, we can use EntityManager like this:
    @PersistenceContext
    private EntityManager entityManager;
-   */
-  Role findByRolename(String rolename);
+	 */
+	Role findByRolename(String rolename);
 
 }

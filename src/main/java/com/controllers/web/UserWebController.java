@@ -16,35 +16,33 @@ import org.thymeleaf.context.Context;
 @Controller
 public class UserWebController {
 
-  @Autowired
-  private AuthenticationService authentication;
+	@Autowired
+	private AuthenticationService authentication;
 
-  @Autowired
-  private TemplateEngine templateEngine;
+	@Autowired
+	private TemplateEngine templateEngine;
 
-  @Autowired
-  private MailerService mailerService;
+	@Autowired
+	private MailerService mailerService;
 
-  /**
-   * http://www.thymeleaf.org/doc/articles/springmail.html
-   *
-   * @throws javax.mail.MessagingException
-   */
-  @RequestMapping(value = "sendSubscriptionToUser", method = RequestMethod.GET)
-  public void sendSubscriptionToUser() throws MessagingException {
+	/**
+	 * http://www.thymeleaf.org/doc/articles/springmail.html
+	 */
+	@RequestMapping(value = "sendSubscriptionToUser", method = RequestMethod.GET)
+	public void sendSubscriptionToUser() throws MessagingException {
 
-    AuthUser user = authentication.getAuthenticatedUser();
+		AuthUser user = authentication.getAuthenticatedUser();
 
-    // Prepare the evaluation context
-    Context ctx = new Context(LocaleContextHolder.getLocale());
-    ctx.setVariable("name", user.getUsername());
-    ctx.setVariable("subscriptionDate", new Date());
+		// Prepare the evaluation context
+		Context ctx = new Context(LocaleContextHolder.getLocale());
+		ctx.setVariable("name", user.getUsername());
+		ctx.setVariable("subscriptionDate", new Date());
 
-    String htmlContent = templateEngine.process("sub_mail", ctx);
+		String htmlContent = templateEngine.process("sub_mail", ctx);
 
-    String subject = "Email test";
+		String subject = "Email test";
 
-    mailerService.sendMail(user.getEmail(), subject, htmlContent);
-  }
+		mailerService.sendMail(user.getEmail(), subject, htmlContent);
+	}
 
 }

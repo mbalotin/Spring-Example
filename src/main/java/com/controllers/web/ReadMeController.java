@@ -15,27 +15,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class ReadMeController {
 
-  private static final Logger logger = Logger.getLogger(ReadMeController.class);
+	private static final Logger LOGGER = Logger.getLogger(ReadMeController.class);
 
-  @Value("classpath:/markdown/README.md")
-  private Resource readMeMark;
+	@Value("classpath:/markdown/README.md")
+	private Resource readMeMark;
 
-  private String readMe;
+	private String readMe;
 
-  @PostConstruct
-  private void createReadMe() {
-    try {
-      String readMeString = IOUtils.toString(readMeMark.getInputStream());
-      readMe = new Markdown4jProcessor().process(readMeString);
-    } catch (IOException ex) {
-      logger.error("Error creating readme file from markdown. ERROR: " + ex.getMessage());
-    }
-  }
+	@PostConstruct
+	private void createReadMe() {
+		try {
+			String readMeString = IOUtils.toString(readMeMark.getInputStream());
+			readMe = new Markdown4jProcessor().process(readMeString);
+		} catch (IOException ex) {
+			LOGGER.error("Error creating readme file from markdown. ERROR: " + ex.getMessage());
+		}
+	}
 
-  @RequestMapping(value = "/", produces = MediaType.TEXT_HTML_VALUE)
-  public String getReadMe(Model model) {
-    model.addAttribute("readme", readMe);
-    return "faq";
-  }
+	@RequestMapping(value = "/", produces = MediaType.TEXT_HTML_VALUE)
+	public String getReadMe(Model model) {
+		model.addAttribute("readme", readMe);
+		return "faq";
+	}
 
 }

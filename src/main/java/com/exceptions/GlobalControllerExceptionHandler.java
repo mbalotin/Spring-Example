@@ -18,15 +18,15 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 class GlobalControllerExceptionHandler {
 
-  //Rest examples
-  @ExceptionHandler({IllegalArgumentException.class, HttpMessageNotReadableException.class,
-    MessagingException.class, UsernameNotFoundException.class})
-  public void handleBadRequests(HttpServletResponse response) throws IOException {
-    response.sendError(HttpStatus.BAD_REQUEST.value());
-  }
+	//Rest examples
+	@ExceptionHandler({IllegalArgumentException.class, HttpMessageNotReadableException.class,
+		MessagingException.class, UsernameNotFoundException.class})
+	public void handleBadRequests(HttpServletResponse response) throws IOException {
+		response.sendError(HttpStatus.BAD_REQUEST.value());
+	}
 
-  //Web example (not a working example)
-  /*
+	//Web example (not a working example)
+	/*
    @ExceptionHandler(Exception.class)
    public ModelAndView handleError(HttpServletRequest req, Exception exception) {
    ModelAndView mav = new ModelAndView();
@@ -35,5 +35,5 @@ class GlobalControllerExceptionHandler {
    mav.setViewName("error");
    return mav;
    }
-   */
+	 */
 }

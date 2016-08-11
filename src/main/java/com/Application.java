@@ -7,11 +7,13 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.aspectj.EnableSpringConfigured;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 // Spring boot example: https://spring.io/guides/gs/spring-boot/
 @EnableCaching
 @EnableScheduling
+@EnableWebMvcSecurity
 @EnableSpringConfigured
 @EnableTransactionManagement
 @EnableConfigurationProperties
@@ -19,8 +21,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @SpringBootApplication
 public class Application {
 
-  public static void main(String[] args) throws Exception {
-    SpringApplication.run(Application.class, args);
-  }
+	public static void main(String[] args) throws Exception {
+		SpringApplication.run(Application.class, args);
+	}
 
 }

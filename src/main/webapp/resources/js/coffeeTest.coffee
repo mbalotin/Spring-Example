@@ -1,2 +1,2 @@
 $ ->
-  console.log("COFFEE is ready")
+  console.log("COFFEE is ready");

@@ -15,20 +15,20 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("admin/scripts")
 public class ScriptWebController {
 
-  @Autowired
-  private AuthenticationService authentication;
+	@Autowired
+	private AuthenticationService authentication;
 
-  @Autowired
-  private ScriptRepository scriptRepository;
+	@Autowired
+	private ScriptRepository scriptRepository;
 
-  @RequestMapping()
-  public ModelAndView getScriptList() throws IOException {
-    return new ModelAndView("admin/scripts", "scripts", getAllScripts());
-  }
+	@RequestMapping()
+	public ModelAndView getScriptList() throws IOException {
+		return new ModelAndView("admin/scripts", "scripts", getAllScripts());
+	}
 
-  public Collection<Script> getAllScripts() {
-    AuthUser user = authentication.getAuthenticatedUser();
-    return scriptRepository.findAllByOwner(user);
-  }
+	public Collection<Script> getAllScripts() {
+		AuthUser user = authentication.getAuthenticatedUser();
+		return scriptRepository.findAllByOwner(user);
+	}
 
 }

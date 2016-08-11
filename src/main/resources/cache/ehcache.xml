@@ -1,0 +1,25 @@
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+				 xsi:noNamespaceSchemaLocation="ehcache.xsd"
+				 updateCheck="false"
+				 monitoring="autodetect"
+				 dynamicConfig="true">
+
+	<diskStore path="java.io.tmpdir" />
+
+	<cache name="users"
+				 maxElementsInMemory="10000"
+				 eternal="true"
+				 overflowToDisk="false"
+				 memoryStoreEvictionPolicy="LFU">
+		<persistence strategy="none" />
+	</cache>
+
+	<cache name="scripts"
+				 maxElementsInMemory="10000"
+				 eternal="true"
+				 overflowToDisk="false"
+				 memoryStoreEvictionPolicy="LFU">
+		<persistence strategy="none" />
+	</cache>
+
+</ehcache>

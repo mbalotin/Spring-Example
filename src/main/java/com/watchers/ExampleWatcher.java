@@ -8,8 +8,9 @@ import org.springframework.stereotype.Service;
 @Production
 public class ExampleWatcher {
 
-  @Scheduled(fixedDelayString = "${watcher.interval}")
-  private void activateManager() {
-    System.err.println("Watcher ping.");
-  }
+	@Scheduled(fixedDelayString = "${watcher.interval}")
+	private void activateManager() {
+		System.err.println("Watcher ping.");
+	}
+
 }

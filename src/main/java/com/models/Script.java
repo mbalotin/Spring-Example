@@ -15,20 +15,20 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(exclude = {"id", "owner"})
 public class Script implements Serializable {
 
-  private static final long serialVersionUID = -4271794105905772564L;
+	private static final long serialVersionUID = -4271794105905772564L;
 
-  @Id
-  @JsonIgnore
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private long id;
+	@Id
+	@JsonIgnore
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
 
-  private String name;
-  private String content;
-  private String description;
-  private String code;
+	private String name;
+	private String content;
+	private String description;
+	private String code;
 
-  @JsonIgnore
-  @ManyToOne
-  private AuthUser owner;
+	@JsonIgnore
+	@ManyToOne
+	private AuthUser owner;
 
 }

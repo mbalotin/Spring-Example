@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class GreetingController {
 
-  @Autowired
-  private AuthenticationService authentication;
+	@Autowired
+	private AuthenticationService authentication;
 
-  @RequestMapping("greeting")
-  public String greeting(Model model) {
-    String name = authentication.getAuthenticatedUser().getUsername();
-    model.addAttribute("name", name);
-    return "greeting";
-  }
+	@RequestMapping("greeting")
+	public String greeting(Model model) {
+		String name = authentication.getAuthenticatedUser().getUsername();
+		model.addAttribute("name", name);
+		return "greeting";
+	}
 
 }
