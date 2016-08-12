@@ -6,6 +6,7 @@ import com.models.Script;
 import com.services.AuthenticationService;
 import java.io.IOException;
 import java.util.Collection;
+import javax.validation.Valid;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -41,25 +42,20 @@ public class ScriptController {
 	}
 
 	@Cacheable
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	@RequestMapping(value = "list", method = RequestMethod.GET)
 	public Collection<Script> getScriptList() {
 		return scriptRepository.findAllByOwner(authentication.getAuthenticatedUser());
 	}
 
 	@Cacheable
-	@RequestMapping(value = "/{scriptName}", method = RequestMethod.GET)
+	@RequestMapping(value = "get/{scriptName}", method = RequestMethod.GET)
 	public Script getScriptListQuery(@PathVariable("scriptName") String scriptName) {
 		return scriptRepository.findByNameAndOwner(scriptName, authentication.getAuthenticatedUser());
 	}
 
 	@RequestMapping(value = "new", method = RequestMethod.POST)
-	public Script postNewScript(@RequestBody Script script) {
+	public Script postNewScript(@RequestBody @Valid Script script) {
 		AuthUser owner = authentication.getAuthenticatedUser();
-
-		if (script.getName() == null || script.getContent() == null) {
-			throw new IllegalArgumentException("One or more required fields are empty. {name | content}");
-		}
-
 		script.setOwner(owner);
 		scriptRepository.save(script);
 

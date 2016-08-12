@@ -6,6 +6,7 @@ import com.models.AuthUser;
 import com.services.AuthenticationService;
 import java.io.IOException;
 import java.util.Collection;
+import javax.validation.Valid;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -49,14 +50,14 @@ public class UserController {
 
 	@AdminOnly
 	@Cacheable
-	@RequestMapping(value = "/{userName}", method = RequestMethod.GET)
+	@RequestMapping(value = "get/{username}", method = RequestMethod.GET)
 	public AuthUser getUserByName(@PathVariable("username") String username) {
 		return userRepository.findByUsername(username);
 	}
 
 	@AdminOnly
 	@RequestMapping(value = "new", method = RequestMethod.POST)
-	public AuthUser postNewUser(@RequestBody AuthUser user) {
+	public AuthUser postNewUser(@RequestBody @Valid AuthUser user) {
 
 		//TODO: Can I do this check better?
 		if (user.getUsername() == null || user.getEmail() == null || user.getPassword() == null) {

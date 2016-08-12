@@ -17,7 +17,7 @@ public class GreetingController {
 	@Autowired
 	private AuthenticationService authentication;
 
-	@RequestMapping("greeting")
+	@RequestMapping("/")
 	public String greeting(Model model) {
 		String name = authentication.getAuthenticatedUser().getUsername();
 		model.addAttribute("name", name);

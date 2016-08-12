@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.hibernate.validator.constraints.NotBlank;
 
 @Data
 @Entity
@@ -22,7 +23,9 @@ public class Script implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 
+	@NotBlank
 	private String name;
+	@NotBlank
 	private String content;
 	private String description;
 	private String code;

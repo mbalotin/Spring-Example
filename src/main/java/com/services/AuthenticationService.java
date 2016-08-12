@@ -72,8 +72,7 @@ public class AuthenticationService implements UserDetailsService {
 	}
 
 	public AuthUser getAuthenticatedUserByName(String username) throws UsernameNotFoundException {
-		return Optional.ofNullable(userRepository.findByUsername(username))
-						.orElseThrow(() -> new UsernameNotFoundException(String.format("User with username: %s was not found", username)));
+		return Optional.ofNullable(userRepository.findByUsername(username)).orElseThrow(() -> new UsernameNotFoundException("Bad credentials"));
 	}
 
 	public Set<Role> getUserRoles() {
