@@ -14,26 +14,26 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 // Rest assured: http://www.jayway.com/2014/07/04/integration-testing-a-spring-boot-application/
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = Application.class)
+//Test classes MUST be named XXXTests.java
 @WebAppConfiguration
 @IntegrationTest("server.port:0")
-//Test classes MUST be named XXXTests.java
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringApplicationConfiguration(classes = Application.class)
 public class ExampleTests {
 
-  @Value("${local.server.port}")
-  int port;
+	@Value("${local.server.port}")
+	int port;
 
-  @Before
-  public void setUp() {
-    RestAssured.port = port;
-    RestAssured.authentication = basic("admin", "admin");
-  }
+	@Before
+	public void setUp() {
+		RestAssured.port = port;
+		RestAssured.authentication = basic("admin", "admin");
+	}
 
-  @Test
-  public void scriptNameTest() {
-    given().when().get("/api/scripts")
-            .then().body(containsString("name"));
+	@Test
+	public void scriptNameTest() {
+		given().when().get("/api/scripts")
+						.then().body(containsString("name"));
 
-  }
+	}
 }

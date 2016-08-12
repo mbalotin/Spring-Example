@@ -9,7 +9,7 @@
 	<name>Spring Example</name>
 	<description>Spring Example for every project!</description>
 	<version>1.0</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<!-- Inherit defaults from Spring Boot -->
 	<parent>
@@ -22,9 +22,17 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.resources.sourceEncoding>UTF-8</project.resources.sourceEncoding>
-		<!-- This is used by spring boot to set java version and Main class (for jar).-->
+
+		<!-- This is used by spring boot to set java version and Main class-->
 		<java.version>1.8</java.version>
 		<start-class>com.Application</start-class>
+
+		<!-- Dependency versions -->
+		<rest-assured-version>2.9.0</rest-assured-version>
+		<bootstrap-version>3.3.7</bootstrap-version>
+		<jquery-version>3.1.0</jquery-version>
+		<angularjs-version>1.5.7</angularjs-version>
+		<commons-validator-version>1.5.1</commons-validator-version>
 	</properties>
 
 	<dependencies>
@@ -40,6 +48,11 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
 
 		<!-- Spring Boot Test dependencies http://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html -->
 		<dependency>
@@ -49,7 +62,7 @@
 		<dependency>
 			<groupId>com.jayway.restassured</groupId>
 			<artifactId>rest-assured</artifactId>
-			<version>2.9.0</version>
+			<version>${rest-assured-version}</version>
 		</dependency>
 
 		<!-- Spring MCV dependencies -->
@@ -105,24 +118,24 @@
 		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>bootstrap</artifactId>
-			<version>3.3.7</version>
+			<version>${bootstrap-version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>jquery</artifactId>
-			<version>3.1.0</version>
+			<version>${jquery-version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>angularjs</artifactId>
-			<version>1.5.7</version>
+			<version>${angularjs-version}</version>
 		</dependency>
 
 		<!-- Commons dependencies  -->
 		<dependency>
 			<groupId>commons-validator</groupId>
 			<artifactId>commons-validator</artifactId>
-			<version>1.5.1</version>
+			<version>${commons-validator-version}</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-io</groupId>
@@ -137,13 +150,6 @@
 		<dependency>
 			<groupId>net.sf.ehcache</groupId>
 			<artifactId>ehcache</artifactId>
-		</dependency>
-
-		<!-- Markdown to Html dependencies -->
-		<dependency>
-			<groupId>org.commonjava.googlecode.markdown4j</groupId>
-			<artifactId>markdown4j</artifactId>
-			<version>2.2-cj-1.1</version>
 		</dependency>
 
 		<!-- Lombok dependencies -->
@@ -195,16 +201,6 @@
 				<includes>
 					<include>keystore.jks</include>
 					<include>application.properties</include>
-				</includes>
-			</resource>
-
-			<!-- Markdown Resources -->
-			<resource>
-				<directory>${basedir}</directory>
-				<targetPath>${project.build.outputDirectory}/markdown/</targetPath>
-				<filtering>false</filtering>
-				<includes>
-					<include>README.md</include>
 				</includes>
 			</resource>
 
@@ -386,33 +382,6 @@
 			<url>file://${basedir}/repo</url>
 		</repository>-->
 
-		<!-- Add Spring repositories -->
-		<!-- (you don't need this if you are using a .RELEASE version) -->
-		<repository>
-			<id>spring-snapshots</id>
-			<url>http://repo.spring.io/snapshot</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-		<repository>
-			<id>spring-milestones</id>
-			<url>http://repo.spring.io/milestone</url>
-		</repository>
-
 	</repositories>
-
-	<pluginRepositories>
-
-		<pluginRepository>
-			<id>spring-snapshots</id>
-			<url>http://repo.spring.io/snapshot</url>
-		</pluginRepository>
-		<pluginRepository>
-			<id>spring-milestones</id>
-			<url>http://repo.spring.io/milestone</url>
-		</pluginRepository>
-
-	</pluginRepositories>
 
 </project>

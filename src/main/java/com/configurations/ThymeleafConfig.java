@@ -3,6 +3,7 @@ package com.configurations;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
+import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 /**
  * This class configures Thymeleaf to find the templates in the correct folders.
@@ -12,11 +13,12 @@ import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 @Configuration
 public class ThymeleafConfig {
 
+	// For WAR
 	@Bean
-	public ClassLoaderTemplateResolver webpagesClassLoaderResolver() {
-		ClassLoaderTemplateResolver webpagesResolver = new ClassLoaderTemplateResolver();
+	public ServletContextTemplateResolver webpagesServletContextResolver() {
+		ServletContextTemplateResolver webpagesResolver = new ServletContextTemplateResolver();
 		webpagesResolver.setTemplateMode("HTML5");
-		webpagesResolver.setPrefix("webpages/");
+		webpagesResolver.setPrefix("/webpages/");
 		webpagesResolver.setSuffix(".html");
 
 		return webpagesResolver;
@@ -31,4 +33,5 @@ public class ThymeleafConfig {
 
 		return mailResolver;
 	}
+
 }
