@@ -78,8 +78,7 @@ public class SecurityConfig extends WebMvcConfigurerAdapter {
 		protected void configure(HttpSecurity http) throws Exception {
 			http.csrf().disable()
 							.authorizeRequests()
-							.antMatchers("/readme").permitAll()
-							.antMatchers("/error/**").permitAll()
+							.antMatchers("/errors/**").permitAll()
 							.antMatchers("admin/**").hasRole("ADMIN")
 							.anyRequest().fullyAuthenticated()
 							.and()

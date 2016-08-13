@@ -1,13 +1,16 @@
 package com.exceptions;
 
 import java.io.IOException;
+import java.util.Date;
 import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * This is a user friendly way of returning errors in rest and web requests.
@@ -18,6 +21,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 class GlobalControllerExceptionHandler {
 
+	public static final String DEFAULT_ERROR_VIEW = "error";
+
 	//Rest examples
 	@ExceptionHandler({IllegalArgumentException.class, HttpMessageNotReadableException.class,
 		MessagingException.class, UsernameNotFoundException.class})
@@ -25,15 +30,13 @@ class GlobalControllerExceptionHandler {
 		response.sendError(HttpStatus.BAD_REQUEST.value());
 	}
 
-	//Web example (not a working example)
-	/*
-   @ExceptionHandler(Exception.class)
-   public ModelAndView handleError(HttpServletRequest req, Exception exception) {
-   ModelAndView mav = new ModelAndView();
-   mav.addObject("exception", exception);
-   mav.addObject("url", req.getRequestURL());
-   mav.setViewName("error");
-   return mav;
-   }
-	 */
+	@ExceptionHandler(value = {Exception.class, RuntimeException.class})
+	public ModelAndView defaultErrorHandler(HttpServletRequest request, Exception e) {
+		ModelAndView mav = new ModelAndView(DEFAULT_ERROR_VIEW);
+
+		mav.addObject("datetime", new Date());
+		mav.addObject("exception", e);
+		mav.addObject("url", request.getRequestURL());
+		return mav;
+	}
 }

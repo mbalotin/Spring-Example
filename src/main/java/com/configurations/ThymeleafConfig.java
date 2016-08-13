@@ -13,11 +13,29 @@ import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 @Configuration
 public class ThymeleafConfig {
 
-	// For WAR
+	//For executable WAR
+	@Bean
+	public ClassLoaderTemplateResolver webpagesClassLoaderResolver() {
+		ClassLoaderTemplateResolver webpagesResolver = new ClassLoaderTemplateResolver();
+		webpagesResolver.setPrefix("webpages/");
+		webpagesResolver.setSuffix(".html");
+
+		return webpagesResolver;
+	}
+
+	@Bean
+	public ClassLoaderTemplateResolver mailClassLoaderResolver() {
+		ClassLoaderTemplateResolver mailResolver = new ClassLoaderTemplateResolver();
+		mailResolver.setPrefix("mails/");
+		mailResolver.setSuffix(".html");
+
+		return mailResolver;
+	}
+
+	//For deployable WAR
 	@Bean
 	public ServletContextTemplateResolver webpagesServletContextResolver() {
 		ServletContextTemplateResolver webpagesResolver = new ServletContextTemplateResolver();
-		webpagesResolver.setTemplateMode("HTML5");
 		webpagesResolver.setPrefix("/webpages/");
 		webpagesResolver.setSuffix(".html");
 
@@ -25,10 +43,18 @@ public class ThymeleafConfig {
 	}
 
 	@Bean
-	public ClassLoaderTemplateResolver mailResolver() {
-		ClassLoaderTemplateResolver mailResolver = new ClassLoaderTemplateResolver();
-		mailResolver.setTemplateMode("HTML5");
-		mailResolver.setPrefix("mails/");
+	public ServletContextTemplateResolver templatesServletContextResolver() {
+		ServletContextTemplateResolver webpagesResolver = new ServletContextTemplateResolver();
+		webpagesResolver.setPrefix("/templates/");
+		webpagesResolver.setSuffix(".html");
+
+		return webpagesResolver;
+	}
+
+	@Bean
+	public ServletContextTemplateResolver mailServletContextResolver() {
+		ServletContextTemplateResolver mailResolver = new ServletContextTemplateResolver();
+		mailResolver.setPrefix("/mails/");
 		mailResolver.setSuffix(".html");
 
 		return mailResolver;

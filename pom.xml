@@ -20,19 +20,16 @@
 	</parent>
 
 	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.resources.sourceEncoding>UTF-8</project.resources.sourceEncoding>
-
 		<!-- This is used by spring boot to set java version and Main class-->
 		<java.version>1.8</java.version>
 		<start-class>com.Application</start-class>
 
 		<!-- Dependency versions -->
-		<rest-assured-version>2.9.0</rest-assured-version>
-		<bootstrap-version>3.3.7</bootstrap-version>
-		<jquery-version>3.1.0</jquery-version>
-		<angularjs-version>1.5.7</angularjs-version>
-		<commons-validator-version>1.5.1</commons-validator-version>
+		<rest.assured.version>2.9.0</rest.assured.version>
+		<bootstrap.version>3.3.7</bootstrap.version>
+		<jquery.version>3.1.0</jquery.version>
+		<angularjs.version>1.5.7</angularjs.version>
+		<commons.validator.version>1.5.1</commons.validator.version>
 	</properties>
 
 	<dependencies>
@@ -62,7 +59,7 @@
 		<dependency>
 			<groupId>com.jayway.restassured</groupId>
 			<artifactId>rest-assured</artifactId>
-			<version>${rest-assured-version}</version>
+			<version>${rest.assured.version}</version>
 		</dependency>
 
 		<!-- Spring MCV dependencies -->
@@ -118,24 +115,24 @@
 		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>bootstrap</artifactId>
-			<version>${bootstrap-version}</version>
+			<version>${bootstrap.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>jquery</artifactId>
-			<version>${jquery-version}</version>
+			<version>${jquery.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>angularjs</artifactId>
-			<version>${angularjs-version}</version>
+			<version>${angularjs.version}</version>
 		</dependency>
 
 		<!-- Commons dependencies  -->
 		<dependency>
 			<groupId>commons-validator</groupId>
 			<artifactId>commons-validator</artifactId>
-			<version>${commons-validator-version}</version>
+			<version>${commons.validator.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-io</groupId>
@@ -176,21 +173,11 @@
 
 		<!-- Add Resources -->
 		<resources>
+
 			<!-- Basic Resources-->
 			<resource>
 				<directory>${basedir}/src/main/resources</directory>
 				<filtering>true</filtering>
-			</resource>
-
-			<!-- WebApp Resources-->
-			<resource>
-				<directory>${basedir}/src/main/webapp</directory>
-				<filtering>false</filtering>
-				<excludes>
-					<!-- These file are excluded because they are compiled and minified by other plugins -->
-					<exclude>**/*.coffee</exclude>
-					<exclude>**/*.scss</exclude>
-				</excludes>
 			</resource>
 
 			<!-- Keystore.jks and external application.properties Resources -->
@@ -207,98 +194,59 @@
 		</resources>
 
 		<plugins>
-			<!-- Package as an executable jar or war. This does most of the work for us. -->
+			<!-- Package as an executable war. This does most of the work for us. -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 
-			<!-- Compiler and Minifier for Coffeescript-->
-			<plugin>
-				<groupId>com.theoryinpractise</groupId>
-				<artifactId>coffee-maven-plugin</artifactId>
-				<version>1.4.16</version>
-				<configuration>
-					<coffeeOutputDirectory>${project.build.outputDirectory}/resources/js</coffeeOutputDirectory>
-					<compileIndividualFiles>false</compileIndividualFiles>
-					<coffeeJoinSets>
-						<joinSet>
-							<id>main</id> <!-- This is also the name of the resulting file -->
-							<fileSet>
-								<directory>${basedir}/src/main/webapp/resources/js</directory>
-								<includes>
-									<include>**/*.coffee</include>
-								</includes>
-							</fileSet>
-						</joinSet>
-					</coffeeJoinSets>
-					<minifiedFile>${project.build.outputDirectory}/resources/js/main.min.js</minifiedFile>
-					<setOfFilesToMinify>
-						<directory>${project.build.outputDirectory}/resources/js</directory>
-						<includes>
-							<include>**/*.js</include>
-						</includes>
-					</setOfFilesToMinify>
-				</configuration>
-				<executions>
-					<execution>
-						<phase>process-resources</phase>
-						<goals>
-							<goal>coffee</goal>
-							<goal>minify</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-
-			<!-- Compiler for SCSS  -->
-			<plugin>
-				<groupId>org.jasig.maven</groupId>
-				<artifactId>sass-maven-plugin</artifactId>
-				<version>1.1.1</version>
-				<executions>
-					<execution>
-						<phase>process-resources</phase>
-						<goals>
-							<goal>update-stylesheets</goal>
-						</goals>
-						<configuration>
-							<sassSourceDirectory>${basedir}/src/main/webapp/resources/css</sassSourceDirectory>
-							<destination>${project.build.outputDirectory}/resources/css</destination>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-
-			<!-- Minifier for CSS -->
 			<plugin>
 				<groupId>com.samaxes.maven</groupId>
 				<artifactId>minify-maven-plugin</artifactId>
 				<version>1.7.4</version>
 				<executions>
 					<execution>
-						<phase>process-resources</phase>
+						<id>default-minify</id>
+						<phase>generate-resources</phase>
 						<goals>
 							<goal>minify</goal>
 						</goals>
 						<configuration>
-							<webappSourceDir>${project.build.outputDirectory}/resources</webappSourceDir>
 							<webappTargetDir>${project.build.outputDirectory}/resources</webappTargetDir>
 							<nosuffix>true</nosuffix>
 
-							<!-- CSS Minify Options -->
-							<cssSourceDir>css</cssSourceDir>
+							<!--  CSS -->
+							<cssSourceDir>resources/css</cssSourceDir>
 							<cssTargetDir>css</cssTargetDir>
-							<cssFinalFile>main.min.css</cssFinalFile>
 							<cssSourceIncludes>
-								<include>*.css</include>
+								<cssSourceInclude>*.css</cssSourceInclude>
 							</cssSourceIncludes>
+							<cssFinalFile>style.min.css</cssFinalFile>
+
+							<!--  JS -->
+							<jsSourceDir>resources/js</jsSourceDir>
+							<jsTargetDir>js</jsTargetDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>*.js</jsSourceInclude>
+							</jsSourceIncludes>
+							<jsFinalFile>script.min.js</jsFinalFile>
 						</configuration>
 					</execution>
 				</executions>
 			</plugin>
 
-			<!-- Compile time weaver for Configurable classes - http://mojo.codehaus.org/aspectj-maven-plugin/usage.html -->
+			<!-- Since we copy web files into classpath to make then available for spring and thymeleaf,
+			these exclusions avoid duplications of webapp content when packaging a war. -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<packagingExcludes>resources/</packagingExcludes>
+				</configuration>
+			</plugin>
+
+			<!-- Compile time weaver for Configurable classes -->
+			<!-- http://mojo.codehaus.org/aspectj-maven-plugin/usage.html -->
 			<!-- https://palesz.wordpress.com/2011/12/03/howto-maven-lombok-and-aspectj-together/ -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>

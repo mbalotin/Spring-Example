@@ -19,9 +19,9 @@ VOLUME /tmp
 # Adding all needed files
 ADD application.properties application.properties
 ADD keystore.jks keystore.jks
-ADD spring_example.jar spring_example.jar
+ADD spring_example.war spring_example.war
 
 # Add modification time for static content
-RUN bash -c 'touch /spring_example.jar'
+RUN bash -c 'touch /spring_example.war'
 
-ENTRYPOINT ["java","-server","-Xmx4048m","-jar", "spring_example.jar", "--env='production'"]
+ENTRYPOINT ["java","-server","-Xmx4048m","-jar", "spring_example.war", "--env='production'"]
