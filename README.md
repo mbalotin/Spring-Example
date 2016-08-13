@@ -27,16 +27,15 @@ So far, the project includes:
 - Java 1.8.
 - Lots and lots of Spring:
  - Spring Boot (doing most of the heavy work behind curtains).
- - Spring MCV.
+ - Spring MVC.
  - Spring REST.
  - Spring Data JPA with mysql (can be easily changed to any other, including mongoDB).
- - Spring Security (with basic auth OR login/logout pages).
+ - Spring Security (with basic auth AND login/logout pages).
  - Spring SSL support, with Maven copying your keystore.jks automatically.
  - Spring Mail (with thymeleaf templates, just like webpages, and attachment support).
  - Spring MVC Internationalization.
  - Spring Profiles development and production, with dev as default. To run your WAR in production, simply pass --env="production" to java -jar, or change the spring.profiles.active to ${env:production} in application.properties. Running in production requires root access as only root can deploy to ports 80 and 443.
  - Spring + Compile Time Weave with AspectJ for @Configurable support. (http://docs.spring.io/spring/docs/current/spring-framework-reference/html/aop.html#aop-using-aspectj).
- - Spring actuator (http://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/#production-ready).
  - Spring global rest exceptions (for user-friendly exception handling in rest requests).
 - Web views using Thymeleaf templates and pure html (similar to how ruby does it and much cleaner than JSF).
 - WebJars support. Let Maven manage your third party JS dependencies. (http://www.webjars.org/).

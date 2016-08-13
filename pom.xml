@@ -78,17 +78,10 @@
       <version>${rest.assured.version}</version>
     </dependency>
 
-    <!-- Spring MCV dependencies -->
+    <!-- Spring MVC dependencies -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-
-    <!-- Spring Metrics dependencies -->
-    <!-- http://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/#production-ready-->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-actuator</artifactId>
     </dependency>
 
     <!-- Spring Security dependencies -->
