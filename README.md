@@ -52,7 +52,11 @@ So far, the project includes:
 - More examples and explanations are in code comments.
 
 ####RUN AS WAR:
-- 1) Change package to war in pom.xml: <packaging>war</packaging>
+- 1) Change package to war in pom.xml: 
+ ```
+ <packaging>war</packaging>
+ 
+ ```
 
 - 2) Uncomment this line in pom.xml:
 
@@ -95,10 +99,14 @@ If you don't need a WEB Application:
  - Remove all Thymeleaf AND WebJar dependencies from pom.xml
  - Remove this resource from pom.xml:
  ```
-        <resource>
-            <directory>${basedir}/src/main/webapp</directory>
-            <filtering>false</filtering>
-        </resource>
+    <!-- Webapps Resources-->
+    <resource>
+      <directory>${basedir}/src/main/webapp</directory>
+      <filtering>false</filtering>
+      <excludes>
+        <exclude>resources/**</exclude>
+      </excludes>
+    </resource>
  ```
 
 ####WARNING:
