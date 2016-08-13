@@ -1,6 +1,13 @@
 Spring Example 1.0
 ======
 
+####TODO:
+
+- 1) Improve GlobalControllerExceptionHandler with better and more examples
+- 2) Http to Https forward in Embedded Jetty
+
+
+
 This is a skeleton project using spring.
 
 The main idea behind this is to have a working java spring
@@ -41,9 +48,37 @@ So far, the project includes:
 - Docker support with automatic image creation via POM.xml (not tested in windows) (https://spring.io/guides/gs/spring-boot-docker/) 
 - External application.properties file to override any properties you want during runtime.
 - Maven local repository example in pom.xml. (Example: https://devcenter.heroku.com/articles/local-maven-dependencies).
-- Works out of the box as both deployable and executable WAR
+- Works out of the box both as a JAR as well as a deployable or executable WAR.
 - Running on embedded Tomcat. Can be easily switched to Jetty (http://docs.spring.io/spring-boot/docs/current/reference/html/howto-embedded-servlet-containers.html#howto-use-jetty-instead-of-tomcat).
 - More examples and explanations are in code comments.
+
+####RUN AS WAR:
+- 1) Change package to war in pom.xml: <packaging>war</packaging>
+
+- 2) Uncomment this line in pom.xml:
+
+ ```
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-tomcat</artifactId>
+      <scope>provided</scope>
+    </dependency>
+ ```
+	
+- 3) Delete this line in pom.xml:
+
+ ```
+      <!-- Webapps Resources-->
+      <resource>
+        <directory>${basedir}/src/main/webapp</directory>
+        <filtering>false</filtering>
+        <excludes>
+          <exclude>resources/**</exclude>
+        </excludes>
+      </resource>
+ ```
+
+
 
 ####REMOVE WEB CONTENT:
 If you don't need a WEB Application:

@@ -7,57 +7,61 @@ import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 /**
  * This class configures Thymeleaf to find the templates in the correct folders.
- * We don't need a configuration for the classpath:templates/ folder as this is the default one.
- * We also don't need to configure /resources as they are placed in a spring public folder.
+ * We don't need to configure /resources as they are placed in a spring public folder.
  */
 @Configuration
 public class ThymeleafConfig {
 
-	//For executable WAR
-	@Bean
-	public ClassLoaderTemplateResolver webpagesClassLoaderResolver() {
-		ClassLoaderTemplateResolver webpagesResolver = new ClassLoaderTemplateResolver();
-		webpagesResolver.setPrefix("webpages/");
-		webpagesResolver.setSuffix(".html");
+  /**
+   * For JAR and executable WAR
+   * We don't need a configuration for the classpath:templates/ folder as this uses the default one.
+   */
+  @Bean
+  public ClassLoaderTemplateResolver webpagesClassLoaderResolver() {
+    ClassLoaderTemplateResolver webpagesResolver = new ClassLoaderTemplateResolver();
+    webpagesResolver.setPrefix("webpages/");
+    webpagesResolver.setSuffix(".html");
 
-		return webpagesResolver;
-	}
+    return webpagesResolver;
+  }
 
-	@Bean
-	public ClassLoaderTemplateResolver mailClassLoaderResolver() {
-		ClassLoaderTemplateResolver mailResolver = new ClassLoaderTemplateResolver();
-		mailResolver.setPrefix("mails/");
-		mailResolver.setSuffix(".html");
+  @Bean
+  public ClassLoaderTemplateResolver mailClassLoaderResolver() {
+    ClassLoaderTemplateResolver mailResolver = new ClassLoaderTemplateResolver();
+    mailResolver.setPrefix("mails/");
+    mailResolver.setSuffix(".html");
 
-		return mailResolver;
-	}
+    return mailResolver;
+  }
 
-	//For deployable WAR
-	@Bean
-	public ServletContextTemplateResolver webpagesServletContextResolver() {
-		ServletContextTemplateResolver webpagesResolver = new ServletContextTemplateResolver();
-		webpagesResolver.setPrefix("/webpages/");
-		webpagesResolver.setSuffix(".html");
+  /**
+   * For deployable WAR
+   */
+  @Bean
+  public ServletContextTemplateResolver webpagesServletContextResolver() {
+    ServletContextTemplateResolver webpagesResolver = new ServletContextTemplateResolver();
+    webpagesResolver.setPrefix("/webpages/");
+    webpagesResolver.setSuffix(".html");
 
-		return webpagesResolver;
-	}
+    return webpagesResolver;
+  }
 
-	@Bean
-	public ServletContextTemplateResolver templatesServletContextResolver() {
-		ServletContextTemplateResolver webpagesResolver = new ServletContextTemplateResolver();
-		webpagesResolver.setPrefix("/templates/");
-		webpagesResolver.setSuffix(".html");
+  @Bean
+  public ServletContextTemplateResolver templatesServletContextResolver() {
+    ServletContextTemplateResolver webpagesResolver = new ServletContextTemplateResolver();
+    webpagesResolver.setPrefix("/templates/");
+    webpagesResolver.setSuffix(".html");
 
-		return webpagesResolver;
-	}
+    return webpagesResolver;
+  }
 
-	@Bean
-	public ServletContextTemplateResolver mailServletContextResolver() {
-		ServletContextTemplateResolver mailResolver = new ServletContextTemplateResolver();
-		mailResolver.setPrefix("/mails/");
-		mailResolver.setSuffix(".html");
+  @Bean
+  public ServletContextTemplateResolver mailServletContextResolver() {
+    ServletContextTemplateResolver mailResolver = new ServletContextTemplateResolver();
+    mailResolver.setPrefix("/mails/");
+    mailResolver.setSuffix(".html");
 
-		return mailResolver;
-	}
+    return mailResolver;
+  }
 
 }

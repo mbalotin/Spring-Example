@@ -16,44 +16,46 @@ import org.springframework.stereotype.Service;
 @Service
 public class MailerService {
 
-	@Autowired
-	private JavaMailSender mailSender;
+  @Autowired
+  private JavaMailSender mailSender;
 
-	@Value("${com.email}")
-	private String sender;
+  @Value("${com.email}")
+  private String sender;
 
-	/*
+  /*
    * Send HTML mail (simple)
-	 */
-	public void sendMail(String recipient, String subject, String content) throws MessagingException {
-		MimeMessage email = mailSender.createMimeMessage();
-		buildMessage(email, recipient, subject, content);
-		mailSender.send(email);
-	}
+   */
+  public void sendMail(String recipient, String subject, String content) throws MessagingException {
+    MimeMessage email = mailSender.createMimeMessage();
+    buildMessage(email, recipient, subject, content);
+    mailSender.send(email);
+  }
 
-	/*
+  /*
    * Send HTML mail with attachment.
-	 */
-	public void sendMailWithAttachment(String recipient, String subject, String content, String attachmentFileName, byte[] attachmentBytes, String attachmentContentType) throws MessagingException {
-		MimeMessage email = mailSender.createMimeMessage();
-		MimeMessageHelper message = buildMessage(email, recipient, subject, content);
+   */
+  public void sendMailWithAttachment(String recipient, String subject, String content, String attachmentFileName,
+          byte[] attachmentBytes, String attachmentContentType) throws MessagingException {
 
-		// Add the attachment
-		final InputStreamSource attachmentSource = new ByteArrayResource(attachmentBytes);
-		message.addAttachment(attachmentFileName, attachmentSource, attachmentContentType);
+    MimeMessage email = mailSender.createMimeMessage();
+    MimeMessageHelper message = buildMessage(email, recipient, subject, content);
 
-		mailSender.send(email);
-	}
+    // Add the attachment
+    final InputStreamSource attachmentSource = new ByteArrayResource(attachmentBytes);
+    message.addAttachment(attachmentFileName, attachmentSource, attachmentContentType);
 
-	private MimeMessageHelper buildMessage(MimeMessage mimeMessage, String recipient, String subject, String content) throws MessagingException {
-		// Prepare message using a Spring helper
-		MimeMessageHelper email = new MimeMessageHelper(mimeMessage, true, "UTF-8");
-		email.setFrom(sender);
-		email.setTo(recipient);
-		email.setSubject(subject);
-		email.setText(content, true); // true = isHtml
+    mailSender.send(email);
+  }
 
-		return email;
-	}
+  private MimeMessageHelper buildMessage(MimeMessage mimeMessage, String recipient, String subject, String content) throws MessagingException {
+    // Prepare message using a Spring helper
+    MimeMessageHelper email = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+    email.setFrom(sender);
+    email.setTo(recipient);
+    email.setSubject(subject);
+    email.setText(content, true); // true = isHtml
+
+    return email;
+  }
 
 }

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * http://www.captaindebug.com/2011/07/accessing-request-parameters-using.html#.VRiyn_nF-2U
  */
 @Controller
-public class GreetingController {
+public class GreetingsController {
 
 	@Autowired
 	private AuthenticationService authentication;
