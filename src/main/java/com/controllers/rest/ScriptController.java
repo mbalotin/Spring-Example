@@ -27,39 +27,39 @@ import org.springframework.web.bind.annotation.RestController;
 @CacheConfig(cacheNames = "scripts")
 public class ScriptController {
 
-  @Value("classpath:/json/scriptExample.json")
-  private Resource scriptExample;
+	@Value("classpath:/json/scriptExample.json")
+	private Resource scriptExample;
 
-  @Autowired
-  private AuthenticationService authentication;
+	@Autowired
+	private AuthenticationService authentication;
 
-  @Autowired
-  private ScriptRepository scriptRepository;
+	@Autowired
+	private ScriptRepository scriptRepository;
 
-  @RequestMapping(value = "")
-  public String getScriptExample() throws IOException {
-    return IOUtils.toString(scriptExample.getInputStream());
-  }
+	@RequestMapping(value = "")
+	public String getScriptExample() throws IOException {
+		return IOUtils.toString(scriptExample.getInputStream());
+	}
 
-  @Cacheable
-  @RequestMapping(value = "list", method = RequestMethod.GET)
-  public Collection<Script> getScriptList() {
-    return scriptRepository.findAllByOwner(authentication.getAuthenticatedUser());
-  }
+	@Cacheable
+	@RequestMapping(value = "list", method = RequestMethod.GET)
+	public Collection<Script> getScriptList() {
+		return scriptRepository.findAllByOwner(authentication.getAuthenticatedUser());
+	}
 
-  @Cacheable
-  @RequestMapping(value = "get/{scriptName}", method = RequestMethod.GET)
-  public Script getScriptListQuery(@PathVariable("scriptName") String scriptName) {
-    return scriptRepository.findByNameAndOwner(scriptName, authentication.getAuthenticatedUser());
-  }
+	@Cacheable
+	@RequestMapping(value = "get/{scriptName}", method = RequestMethod.GET)
+	public Script getScriptListQuery(@PathVariable("scriptName") String scriptName) {
+		return scriptRepository.findByNameAndOwner(scriptName, authentication.getAuthenticatedUser());
+	}
 
-  @RequestMapping(value = "new", method = RequestMethod.POST)
-  public Script postNewScript(@RequestBody @Valid Script script) {
-    AuthUser owner = authentication.getAuthenticatedUser();
-    script.setOwner(owner);
-    scriptRepository.save(script);
+	@RequestMapping(value = "new", method = RequestMethod.POST)
+	public Script postNewScript(@RequestBody @Valid Script script) {
+		AuthUser owner = authentication.getAuthenticatedUser();
+		script.setOwner(owner);
+		scriptRepository.save(script);
 
-    return script;
-  }
+		return script;
+	}
 
 }

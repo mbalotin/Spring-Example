@@ -3,11 +3,12 @@ package com.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -15,6 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.UniqueConstraint;
 import lombok.Data;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -30,15 +32,20 @@ public class AuthUser implements Serializable {
 	@JsonIgnore
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
+
 	@NotBlank
+	@Column(unique = true)
 	private String username;
+
 	@NotBlank
 	private String password;
+
 	@NotBlank
+	@Column(unique = true)
 	private String email;
 
-	@OneToMany(fetch = FetchType.EAGER, casc‌​ade = CascadeType.REMOVE)
-	private Collection<Script> scripts;
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, mappedBy = "owner")
+	private List<Script> scripts;
 
 	@JsonIgnore
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)

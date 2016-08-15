@@ -2,7 +2,9 @@ package com.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,14 +26,18 @@ public class Script implements Serializable {
 	private long id;
 
 	@NotBlank
+	@Column(unique = true)
 	private String name;
+
 	@NotBlank
 	private String content;
+
 	private String description;
+
 	private String code;
 
 	@JsonIgnore
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private AuthUser owner;
 
 }

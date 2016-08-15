@@ -27,6 +27,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+/*
+ * FORM validations https://spring.io/guides/gs/validating-form-input/
+ */
 @RestController
 @Transactional(propagation = Propagation.REQUIRED)
 @RequestMapping("rest/admin/users")
