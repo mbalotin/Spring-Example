@@ -7,7 +7,7 @@
     <p th:text="#{greeting(${name})}" />
     <p th:text="${#httpServletRequest.remoteUser}" />
 
-    <form th:action="@{logout}" method="post">
+    <form th:action="@{/logout}" method="post">
       <input type="submit" value="Sign Out"/>
     </form>
 

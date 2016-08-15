@@ -37,7 +37,7 @@ public class AuthUser implements Serializable {
 	@NotBlank
 	private String email;
 
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER, casc‌​ade = CascadeType.REMOVE)
 	private Collection<Script> scripts;
 
 	@JsonIgnore

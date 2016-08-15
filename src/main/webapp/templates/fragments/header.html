@@ -15,7 +15,9 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li><a th:href="@{/logout}" href="logout"> Logout </a></li>
+						<!--	Needed because CSRF will only accept POST for logout -->
+            <li><a href="/logout" th:href="@{#}" onclick="$('#logoutForm').submit();">Logout</a></li>
+						<form style="visibility: hidden" id="logoutForm" method="post" action="#" th:action="@{/logout}" />
           </ul>
 					<ul class="nav navbar-nav">
             <li><a th:href="@{/admin/scripts}" href="admin/scripts"> Scripts </a></li>

@@ -4,7 +4,7 @@
   <!-- /* Content of this page will be decorated by the elements of default template */ -->
   <div layout:fragment="content">
 
-    <form role="form" action="login" method="post">
+    <form role="form" th:action="@{/login}" method="post">
       <div>
         <label for="username">User Name</label>
         <input type="username" name="username" id="username" required="required" autofocus="autofocus" />

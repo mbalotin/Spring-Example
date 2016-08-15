@@ -33,75 +33,70 @@ import org.thymeleaf.context.Context;
 @CacheConfig(cacheNames = "users")
 public class UserController {
 
-  @Autowired
-  private UserRepository userRepository;
+	@Autowired
+	private UserRepository userRepository;
 
-  @Autowired
-  private AuthenticationService authentication;
+	@Autowired
+	private AuthenticationService authentication;
 
-  @Value("classpath:/json/userExample.json")
-  private Resource userExample;
+	@Value("classpath:/json/userExample.json")
+	private Resource userExample;
 
-  @Autowired
-  private TemplateEngine templateEngine;
+	@Autowired
+	private TemplateEngine templateEngine;
 
-  @Autowired
-  private MailerService mailerService;
+	@Autowired
+	private MailerService mailerService;
 
-  @RequestMapping(value = "")
-  public String getUserExample() throws IOException {
-    return IOUtils.toString(userExample.getInputStream());
-  }
+	@RequestMapping(value = "")
+	public String getUserExample() throws IOException {
+		return IOUtils.toString(userExample.getInputStream());
+	}
 
-  @AdminOnly
-  @Cacheable
-  @RequestMapping(value = "list")
-  public Collection<AuthUser> getAllUserData() {
-    return userRepository.findAll();
-  }
+	@AdminOnly
+	@Cacheable
+	@RequestMapping(value = "list")
+	public Collection<AuthUser> getAllUserData() {
+		return userRepository.findAll();
+	}
 
-  @AdminOnly
-  @Cacheable
-  @RequestMapping(value = "get/{username}", method = RequestMethod.GET)
-  public AuthUser getUserByName(@PathVariable("username") String username) {
-    return userRepository.findByUsername(username);
-  }
+	@AdminOnly
+	@Cacheable
+	@RequestMapping(value = "get/{username}", method = RequestMethod.GET)
+	public AuthUser getUserByName(@PathVariable("username") String username) {
+		return userRepository.findByUsername(username);
+	}
 
-  @AdminOnly
-  @RequestMapping(value = "new", method = RequestMethod.POST)
-  public AuthUser postNewUser(@RequestBody @Valid AuthUser user) {
+	@AdminOnly
+	@RequestMapping(value = "new", method = RequestMethod.POST)
+	public AuthUser postNewUser(@RequestBody @Valid AuthUser user) {
 
-    //TODO: Can I do this check better?
-    if (user.getUsername() == null || user.getEmail() == null || user.getPassword() == null) {
-      throw new IllegalArgumentException("One or more fields are empty. {username | email | password}");
-    }
+		String encryptedPassword = AuthUser.encryptPassword(user.getPassword());
+		user.setPassword(encryptedPassword);
+		user.setRoles(authentication.getUserRoles());
+		userRepository.save(user);
 
-    String encryptedPassword = AuthUser.encryptPassword(user.getPassword());
-    user.setPassword(encryptedPassword);
-    user.setRoles(authentication.getUserRoles());
-    userRepository.save(user);
+		return user;
+	}
 
-    return user;
-  }
+	/**
+	 * http://www.thymeleaf.org/doc/articles/springmail.html
+	 */
+	@RequestMapping(value = "sendSubscriptionToUser", method = RequestMethod.GET)
+	public void sendSubscriptionToUser() throws MessagingException {
 
-  /**
-   * http://www.thymeleaf.org/doc/articles/springmail.html
-   */
-  @RequestMapping(value = "sendSubscriptionToUser", method = RequestMethod.GET)
-  public void sendSubscriptionToUser() throws MessagingException {
+		AuthUser user = authentication.getAuthenticatedUser();
 
-    AuthUser user = authentication.getAuthenticatedUser();
+		// Prepare the evaluation context
+		Context ctx = new Context(LocaleContextHolder.getLocale());
+		ctx.setVariable("name", user.getUsername());
+		ctx.setVariable("subscriptionDate", new Date());
 
-    // Prepare the evaluation context
-    Context ctx = new Context(LocaleContextHolder.getLocale());
-    ctx.setVariable("name", user.getUsername());
-    ctx.setVariable("subscriptionDate", new Date());
+		String htmlContent = templateEngine.process("sub_mail", ctx);
 
-    String htmlContent = templateEngine.process("sub_mail", ctx);
+		String subject = "Email test";
 
-    String subject = "Email test";
-
-    mailerService.sendMail(user.getEmail(), subject, htmlContent);
-  }
+		mailerService.sendMail(user.getEmail(), subject, htmlContent);
+	}
 
 }

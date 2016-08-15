@@ -8,7 +8,9 @@
 
 	<cache name="users"
 				 maxElementsInMemory="10000"
-				 eternal="true"
+				 eternal="false"
+				 timeToIdleSeconds="5"
+				 timeToLiveSeconds="10"
 				 overflowToDisk="false"
 				 memoryStoreEvictionPolicy="LFU">
 		<persistence strategy="none" />
@@ -16,7 +18,9 @@
 
 	<cache name="scripts"
 				 maxElementsInMemory="10000"
-				 eternal="true"
+				 eternal="false"
+				 timeToIdleSeconds="5"
+				 timeToLiveSeconds="10"
 				 overflowToDisk="false"
 				 memoryStoreEvictionPolicy="LFU">
 		<persistence strategy="none" />
