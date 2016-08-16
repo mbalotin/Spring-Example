@@ -26,11 +26,13 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 public class SecurityConfig extends WebMvcConfigurerAdapter {
 
 	/*
-   This registers the /login view without the need for a controller
+   * This registers the /login and errors views withoput the need for a controller.
+	 * You can add more errors here as needed and use them in GlobalControllerExceptionHandler.java
 	 */
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
 		registry.addViewController("/login").setViewName("login");
+		registry.addViewController("/error/404").setViewName("error/404");
 	}
 
 	/*

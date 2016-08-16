@@ -21,15 +21,15 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableConfigurationProperties
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @SpringBootApplication
-public class Application extends SpringBootServletInitializer {
+public class AppInitializer extends SpringBootServletInitializer {
 
   @Override
   protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-    return application.sources(Application.class);
+    return application.sources(AppInitializer.class);
   }
 
   public static void main(String[] args) throws Exception {
-    SpringApplication.run(Application.class, args);
+    SpringApplication.run(AppInitializer.class, args);
   }
 
 }
